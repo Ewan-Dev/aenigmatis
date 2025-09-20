@@ -1,5 +1,5 @@
 from utils import show_help, BOLD, RESET, ITALIC, YELLOW # ANSI codes and help CLI function
-from ciphers import ceaser_encipher # Import ciphers
+from ciphers import caesar_encipher # Import ciphers
 
 # ASCII art
 ascii_art = f"""
@@ -24,7 +24,7 @@ print(f"Type {BOLD}'help'{RESET} to see a list of commands.")
 while True:
     command = input(f"> ").strip().lower()
     
-    ciphers = ["ceaser"]
+    ciphers = ["caesar"]
 
     if command == "help":
         show_help()
@@ -36,8 +36,8 @@ while True:
             print("\n")
             plaintext = input("Plaintext: ")
             shift = input("Shift: ")
-            ceaser_ciphertext = ceaser_encipher(plaintext, shift)
-            print(ceaser_ciphertext)
+            caesar_ciphertext = caesar_encipher(plaintext, shift)
+            print(caesar_ciphertext)
     else:
         print(f"Command {command} not found. ")
         print(f"Type {BOLD}'help'{RESET} to see a list of commands.")

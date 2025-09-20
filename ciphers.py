@@ -1,4 +1,4 @@
-def ceaser_encipher(text, shift):
+def caesar_encipher(text, shift):
     result = ""
     for char in text:
         if char.isalpha():
