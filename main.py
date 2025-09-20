@@ -1,4 +1,4 @@
-from utils import show_help, BOLD, RESET, ITALIC # ANSI codes and help CLI function
+from utils import show_help, BOLD, RESET, ITALIC, YELLOW # ANSI codes and help CLI function
 from ciphers import ceaser_encipher # Import ciphers
 
 # ASCII art
@@ -30,7 +30,7 @@ while True:
         show_help()
     elif command == "encode":
         for cipher in ciphers:
-            print(f"{ciphers.index(cipher) + 1}. {cipher}")
+            print(f"{YELLOW}{ciphers.index(cipher) + 1}. {cipher}{RESET}")
         command = input(f"cipher: ")
         if command == "1":
             print("\n")
