@@ -2,6 +2,10 @@ BOLD = '\033[1m'
 RESET = '\033[0m'
 ITALIC = '\033[3m'
 YELLOW = '\033[33m'
+RED = '\033[31m'
+BLUE = '\033[34m'
+CYAN = '\033[36m'
+PURPLE = '\033[35m'
 
 def show_help():
     print(f"{BOLD}Available Commands:{RESET}")
