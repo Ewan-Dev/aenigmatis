@@ -1,4 +1,4 @@
-from utils import show_help, BOLD, RESET, ITALIC, YELLOW # ANSI codes and help CLI function
+from utils import show_help, BOLD, RESET, ITALIC, YELLOW, RED, BLUE, CYAN, PURPLE # ANSI codes and help CLI function
 from ciphers import caesar_encipher, caesar_decipher, vignere_encipher # Import ciphers
 
 # ASCII art
@@ -57,7 +57,7 @@ while True:
             print(caesar_plaintext)
         elif command == "2":
             print("\n")
-            print("Feature not available yet!")
+            print(f"{RED}Feature not available yet!{RESET}")
     else:
         print(f"Command {command} not found. ")
         print(f"Type {BOLD}'help'{RESET} to see a list of commands.")
