@@ -1,5 +1,5 @@
 from utils import show_help, BOLD, RESET, ITALIC, YELLOW # ANSI codes and help CLI function
-from ciphers import caesar_encipher, caesar_decipher # Import ciphers
+from ciphers import caesar_encipher, caesar_decipher, vignere_encipher # Import ciphers
 
 # ASCII art
 ascii_art = f"""
@@ -24,7 +24,7 @@ print(f"Type {BOLD}'help'{RESET} to see a list of commands.")
 while True:
     command = input(f"> ").strip().lower()
     
-    ciphers = ["caesar"]
+    ciphers = ["caesar", "vignere"]
 
     if command == "help":
         show_help()
@@ -38,7 +38,13 @@ while True:
             shift = input("Shift: ")
             caesar_ciphertext = caesar_encipher(plaintext, shift)
             print(caesar_ciphertext)
-        
+            command = input(f"cipher: ")
+        elif command == "2":
+            print("\n")
+            plaintext = input("Plaintext: ")
+            key = input("Key: ")
+            vignere_cipherttext = vignere_encipher(plaintext, key)
+            print(vignere_cipherttext)  
     elif command == "decode":
         for cipher in ciphers:
             print(f"{YELLOW}{ciphers.index(cipher) + 1}. {cipher}{RESET}")
@@ -49,6 +55,9 @@ while True:
             shift = input("Shift: ")
             caesar_plaintext = caesar_decipher(ciphertext, shift)
             print(caesar_plaintext)
+        elif command == "2":
+            print("\n")
+            print("Feature not available yet!")
     else:
         print(f"Command {command} not found. ")
         print(f"Type {BOLD}'help'{RESET} to see a list of commands.")
