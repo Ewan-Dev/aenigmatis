@@ -1,4 +1,4 @@
-from utils import show_help, BOLD, RESET, ITALIC, YELLOW, RED, BLUE, CYAN, PURPLE # ANSI codes and help CLI function
+from utils import show_help, bigram_finder, BOLD, RESET, ITALIC, YELLOW, RED, BLUE, CYAN, PURPLE # ANSI codes and help CLI function
 from ciphers import caesar_encipher, caesar_decipher, vignere_encipher # Import ciphers
 
 # ASCII art
@@ -58,6 +58,12 @@ while True:
         elif command == "2":
             print("\n")
             print(f"{RED}Feature not available yet!{RESET}")
+    elif command == "bigram":
+            text = input("Paste you text here: ")
+            english_score = round(bigram_finder(text), 2)
+            colour = CYAN if english_score > 0.75 else (RED if english_score < 0.25 else YELLOW)
+            print(f"English confidence: {colour}{english_score}{RESET}")
+            print
     else:
         print(f"Command {command} not found. ")
         print(f"Type {BOLD}'help'{RESET} to see a list of commands.")
