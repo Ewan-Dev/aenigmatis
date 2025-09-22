@@ -14,6 +14,7 @@ def show_help():
     print(f"{YELLOW}decode{RESET}    - Decode a message")
     print(f"{YELLOW}ciper:{RESET}    - Out of the list above, enter a number")
     print(f"{YELLOW}bigram{RESET}    - Uses bigrams to detect how likely input text is English")
+    print(f"{YELLOW}trigram{RESET}   - Uses trigrams to detect how likely input text is English")
     print(f"{YELLOW}exit{RESET}      - Exit the program\n")
 
 def bigram_finder(string):
