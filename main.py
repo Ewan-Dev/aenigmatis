@@ -61,13 +61,15 @@ while True:
     elif command == "bigram":
             text = input("Paste you text here: ")
             english_score = round(bigram_finder(text), 2)
-            colour = CYAN if english_score > 0.75 else (RED if english_score < 0.25 else YELLOW)
-            print(f"English confidence: {colour}{english_score}{RESET}")
+            colour_message = (CYAN, "LIKELY ENGLISH") if english_score > 0.75 else ((RED, "UNLIKELY ENGLISH") if english_score < 0.25 else (YELLOW, "PROBABLY ENGLISH"))
+            colour, message = colour_message
+                        print(f"English confidence: {colour}{BOLD}{english_score}{RESET} - {message}")
     elif command == "trigram":
             text = input("Paste you text here: ")
             english_score = round(trigram_finder(text), 2)
-            colour = CYAN if english_score > 0.75 else (RED if english_score < 0.25 else YELLOW)
-            print(f"English confidence: {colour}{english_score}{RESET}")
+            colour_message = (CYAN, "LIKELY ENGLISH") if english_score > 0.75 else ((RED, "UNLIKELY ENGLISH") if english_score < 0.25 else (YELLOW, "PROBABLY ENGLISH"))
+            colour, message = colour_message
+            print(f"English confidence: {colour}{BOLD}{english_score}{RESET} - {message}")
     else:
         print(f"Command {command} not found. ")
         print(f"Type {BOLD}'help'{RESET} to see a list of commands.")
