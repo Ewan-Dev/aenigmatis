@@ -38,13 +38,14 @@ def polybius_encipher(text, keyword, cols, rows):
     letters_dict = {}
     alphabet = list("ABCDEFGHIKLMNOPQRSTUVWXYZ")
     keyword = keyword.replace("J", "I")
+    keyword = keyword.upper()
     key_letters = list(keyword)
     key = ""
     for char in keyword:
-        if char not in key and char in alphabet:
+        if char in key_letters and char not in key:
             key += char
     for char in alphabet:
-        if char not in keyword:
+        if char not in key_letters:
             key += char
     count = 0
     for row in rows:
@@ -57,4 +58,31 @@ def polybius_encipher(text, keyword, cols, rows):
     return result
 
 
-    
+def polybius_decipher(ciphertext, keyword, cols, rows):
+    cols = range(1, int(cols) + 1)
+    rows = range(1, int(rows) + 1)
+    ciphertext = ciphertext.replace(" ", "")
+    ciphertext = "".join(char for char in ciphertext if char.isdigit())
+    ciphertext_list = [ciphertext[i:i+2] for i in range(0, len(ciphertext), 2)]
+    print(ciphertext)
+    letters_dict = {}
+    alphabet = list("ABCDEFGHIKLMNOPQRSTUVWXYZ")
+    keyword = keyword.replace("J", "I")
+    keyword = keyword.upper()
+    key_letters = list(keyword)
+    key = ""
+    for char in keyword:
+        if char in key_letters and char not in key:
+            key += char
+    for char in alphabet:
+        if char not in key_letters:
+            key += char
+    count = 0
+    for row in rows:
+        for col in cols:
+            current_char = key[count]
+            coordinate = str(row) + str(col)
+            letters_dict.update({coordinate: current_char})
+            count += 1
+    result = "".join(letters_dict[str(num)] for num in ciphertext_list)
+    return result

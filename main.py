@@ -1,5 +1,5 @@
 from utils import show_help, bigram_finder, trigram_finder, BOLD, RESET, ITALIC, YELLOW, RED, BLUE, CYAN, PURPLE # ANSI codes and help CLI function
-from ciphers import caesar_encipher, caesar_decipher, vignere_encipher, polybius_encipher# Import ciphers
+from ciphers import caesar_encipher, caesar_decipher, vignere_encipher, polybius_encipher, polybius_decipher # Import ciphers
 
 # ASCII art
 ascii_art = f"""
@@ -49,8 +49,8 @@ while True:
             print("\n")
             plaintext = input("Plaintext: ")
             keyword = input("Keyword: ")
-            columns = input("Columns (type 5 for alphabet):")
-            rows = input("Rows (type 5 for alphabet):")
+            columns = input("Columns (type 5 for alphabet): ")
+            rows = input("Rows (type 5 for alphabet): ")
             polybius_ciphertext = polybius_encipher(plaintext, keyword, columns, rows)
             print(polybius_ciphertext)
     elif command == "decode":
@@ -66,6 +66,14 @@ while True:
         elif command == "2":
             print("\n")
             print(f"{RED}Feature not available yet!{RESET}")
+        elif command == "3":
+            print("\n")
+            ciphertext = input("Ciphertext: ")
+            keyword = input("Keyword: ")
+            columns = input("Columns (type 5 for alphabet): ")
+            rows = input("Rows (type 5 for alphabet): ")
+            polybius_ciphertext = polybius_decipher(ciphertext, keyword, columns, rows)
+            print(polybius_ciphertext)
     elif command == "bigram":
             text = input("Paste you text here: ")
             english_score = round(bigram_finder(text), 2)
