@@ -37,14 +37,14 @@ while True:
             plaintext = input("Plaintext: ")
             shift = input("Shift: ")
             caesar_ciphertext = caesar_encipher(plaintext, shift)
-            print(caesar_ciphertext)
+            print(f"{BOLD}{caesar_ciphertext}{RESET}")
             command = input(f"cipher: ")
         elif command == "2":
             print("\n")
             plaintext = input("Plaintext: ")
             key = input("Key: ")
             vignere_cipherttext = vignere_encipher(plaintext, key)
-            print(vignere_cipherttext)
+            print(f"{BOLD}{vignere_cipherttext}{RESET}")
         elif command == "3":
             print("\n")
             plaintext = input("Plaintext: ")
@@ -52,7 +52,7 @@ while True:
             columns = input("Columns (type 5 for alphabet): ")
             rows = input("Rows (type 5 for alphabet): ")
             polybius_ciphertext = polybius_encipher(plaintext, keyword, columns, rows)
-            print(polybius_ciphertext)
+            print(f"{BOLD}{polybius_ciphertext}{RESET}")
     elif command == "decode":
         for cipher in ciphers:
             print(f"{YELLOW}{ciphers.index(cipher) + 1}. {cipher}{RESET}")
@@ -62,7 +62,7 @@ while True:
             ciphertext = input("Ciphertext: ")
             shift = input("Shift: ")
             caesar_plaintext = caesar_decipher(ciphertext, shift)
-            print(caesar_plaintext)
+            print(f"{BOLD}{caesar_plaintext}{RESET}")
         elif command == "2":
             print("\n")
             print(f"{RED}Feature not available yet!{RESET}")
@@ -73,7 +73,7 @@ while True:
             columns = input("Columns (type 5 for alphabet): ")
             rows = input("Rows (type 5 for alphabet): ")
             polybius_ciphertext = polybius_decipher(ciphertext, keyword, columns, rows)
-            print(polybius_ciphertext)
+            print(f"{BOLD}{polybius_ciphertext}{RESET}")
     elif command == "bigram":
             text = input("Paste you text here: ")
             english_score = round(bigram_finder(text), 2)
