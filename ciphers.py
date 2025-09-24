@@ -30,3 +30,31 @@ def vignere_encipher(text, key):
             result += char
         i = i + 1
     return result
+
+def polybius_encipher(text, keyword, cols, rows):
+    cols = range(1, int(cols) + 1)
+    rows = range(1, int(rows) + 1)
+    text = text.upper()
+    letters_dict = {}
+    alphabet = list("ABCDEFGHIKLMNOPQRSTUVWXYZ")
+    keyword = keyword.replace("J", "I")
+    key_letters = list(keyword)
+    key = ""
+    for char in keyword:
+        if char not in key and char in alphabet:
+            key += char
+    for char in alphabet:
+        if char not in keyword:
+            key += char
+    count = 0
+    for row in rows:
+        for col in cols:
+            current_char = key[count]
+            coordinate = str(row) + str(col)
+            letters_dict.update({current_char: coordinate})
+            count += 1
+    result = "".join(letters_dict[char] if char in letters_dict else char for char in text )
+    return result
+
+
+    

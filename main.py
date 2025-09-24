@@ -1,5 +1,5 @@
 from utils import show_help, bigram_finder, trigram_finder, BOLD, RESET, ITALIC, YELLOW, RED, BLUE, CYAN, PURPLE # ANSI codes and help CLI function
-from ciphers import caesar_encipher, caesar_decipher, vignere_encipher # Import ciphers
+from ciphers import caesar_encipher, caesar_decipher, vignere_encipher, polybius_encipher# Import ciphers
 
 # ASCII art
 ascii_art = f"""
@@ -24,7 +24,7 @@ print(f"Type {BOLD}'help'{RESET} to see a list of commands.")
 while True:
     command = input(f"> ").strip().lower()
     
-    ciphers = ["caesar", "vignere"]
+    ciphers = ["caesar", "vignere", "polybius"]
 
     if command == "help":
         show_help()
@@ -44,7 +44,15 @@ while True:
             plaintext = input("Plaintext: ")
             key = input("Key: ")
             vignere_cipherttext = vignere_encipher(plaintext, key)
-            print(vignere_cipherttext)  
+            print(vignere_cipherttext)
+        elif command == "3":
+            print("\n")
+            plaintext = input("Plaintext: ")
+            keyword = input("Keyword: ")
+            columns = input("Columns (type 5 for alphabet):")
+            rows = input("Rows (type 5 for alphabet):")
+            polybius_ciphertext = polybius_encipher(plaintext, keyword, columns, rows)
+            print(polybius_ciphertext)
     elif command == "decode":
         for cipher in ciphers:
             print(f"{YELLOW}{ciphers.index(cipher) + 1}. {cipher}{RESET}")

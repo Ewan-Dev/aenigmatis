@@ -547,3 +547,4 @@ def trigram_finder(string):
     confidence = sum(1 for tg in input_trigrams if tg in common_trigrams)
     confidence_value = confidence/len(input_trigrams)
     return confidence_value
+
