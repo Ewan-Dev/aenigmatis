@@ -86,3 +86,49 @@ def polybius_decipher(ciphertext, keyword, cols, rows, alphabet):
             count += 1
     result = "".join(letters_dict[str(num)] for num in ciphertext_list)
     return result
+
+def ADFGVX_encipher(text, keyword):
+    cols = range(1, 7)
+    rows = range(1, 7)
+    text = text.upper()
+    text = text.replace(" ", "")
+    letters_dict = {}
+    ADFGVX_list = list("ADFGVX")
+    alphabet = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+    
+    if keyword.isalpha():
+        keyword = keyword.upper()
+    else: 
+        raise TypeError("Key can only contain letters (for now)")
+
+    key_letters = list(keyword)
+    key = ""
+    for char in keyword:
+        if char in key_letters and char not in key:
+            key += char
+    for char in alphabet:
+        if char not in key_letters:
+            key += char
+    count = 0
+    for row in rows:
+        for col in cols:
+            current_char = key[count]
+            coordinate = str(ADFGVX_list[row - 1]) + str(ADFGVX_list[col - 1])
+            letters_dict.update({current_char: coordinate})
+            count += 1
+            
+    substituted = "".join(letters_dict[char] if char in letters_dict else char for char in text )
+
+    keyword_len = len(keyword)
+    columns = [ '' for i in range(keyword_len)]
+
+    for i, char in enumerate(substituted):
+        columns[ i % keyword_len ] += char
+
+    order = sorted(range(len(keyword)), key=lambda x: keyword[x] )
+    ciphertext = ""
+    for n in order:
+        ciphertext += columns[n]
+
+    print(columns)
+    return ciphertext

@@ -1,5 +1,5 @@
 from utils import show_help, bigram_finder, trigram_finder, BOLD, RESET, ITALIC, YELLOW, RED, BLUE, CYAN, PURPLE # ANSI codes and help CLI function
-from ciphers import caesar_encipher, caesar_decipher, vignere_encipher, polybius_encipher, polybius_decipher # Import ciphers
+from ciphers import caesar_encipher, caesar_decipher, vignere_encipher, polybius_encipher, polybius_decipher, ADFGVX_encipher # Import ciphers
 
 # ASCII art
 ascii_art = f"""
@@ -24,7 +24,7 @@ print(f"Type {BOLD}'help'{RESET} to see a list of commands.")
 while True:
     command = input(f"> ").strip().lower()
     
-    ciphers = ["caesar", "vignere", "polybius"]
+    ciphers = ["caesar", "vignere", "polybius", "ADFGVX"]
 
     if command == "help":
         show_help()
@@ -55,6 +55,13 @@ while True:
             alphabet = alphabet if alphabet else "ABCDEFGHIKLMNOPQRSTUVWXYZ"
             polybius_ciphertext = polybius_encipher(plaintext, keyword, columns, rows, alphabet)
             print(f"{BOLD}{polybius_ciphertext}{RESET}")
+        elif command == "4":
+            print("\n")
+            plaintext = input("Plaintext: ")
+            keyword = input("Keyword: ")
+            ADFGVX_ciphertext = ADFGVX_encipher(plaintext, keyword)
+            print(f"{BOLD}{ADFGVX_ciphertext}{RESET}")
+        
     elif command == "decode":
         for cipher in ciphers:
             print(f"{YELLOW}{ciphers.index(cipher) + 1}. {cipher}{RESET}")
