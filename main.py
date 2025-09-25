@@ -58,8 +58,9 @@ while True:
         elif command == "4":
             print("\n")
             plaintext = input("Plaintext: ")
-            keyword = input("Keyword: ")
-            ADFGVX_ciphertext = ADFGVX_encipher(plaintext, keyword)
+            trans = input("Transpositional key: ")
+            sub = input("Substitution key: ")
+            ADFGVX_ciphertext = ADFGVX_encipher(plaintext, sub, trans)
             print(f"{BOLD}{ADFGVX_ciphertext}{RESET}")
         
     elif command == "decode":

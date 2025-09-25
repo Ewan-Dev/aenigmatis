@@ -87,7 +87,7 @@ def polybius_decipher(ciphertext, keyword, cols, rows, alphabet):
     result = "".join(letters_dict[str(num)] for num in ciphertext_list)
     return result
 
-def ADFGVX_encipher(text, keyword):
+def ADFGVX_encipher(text, keyword_sub, keyword_trans):
     cols = range(1, 7)
     rows = range(1, 7)
     text = text.upper()
@@ -96,14 +96,14 @@ def ADFGVX_encipher(text, keyword):
     ADFGVX_list = list("ADFGVX")
     alphabet = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
     
-    if keyword.isalpha():
-        keyword = keyword.upper()
+    if  keyword_sub.isalpha():
+         keyword_sub =  keyword_sub.upper()
     else: 
         raise TypeError("Key can only contain letters (for now)")
 
-    key_letters = list(keyword)
+    key_letters = list(keyword_sub)
     key = ""
-    for char in keyword:
+    for char in keyword_sub:
         if char in key_letters and char not in key:
             key += char
     for char in alphabet:
@@ -119,13 +119,17 @@ def ADFGVX_encipher(text, keyword):
             
     substituted = "".join(letters_dict[char] if char in letters_dict else char for char in text )
 
-    keyword_len = len(keyword)
-    columns = [ '' for i in range(keyword_len)]
+    keyword_trans_len = len(keyword_trans)
+    columns = [ '' for i in range(keyword_trans_len)]
 
     for i, char in enumerate(substituted):
-        columns[ i % keyword_len ] += char
-
-    order = sorted(range(len(keyword)), key=lambda x: keyword[x] )
+        columns[ i % keyword_trans_len ] += char
+    cleaned_trans_keyword = ""
+    for char in keyword_trans:
+        if char in keyword_trans and char not in cleaned_trans_keyword:
+            cleaned_trans_keyword  += char
+    cleaned_trans_keyword = list(cleaned_trans_keyword)
+    order = sorted(range(len(keyword_trans)), key=lambda x: keyword_trans[x] )
     ciphertext = ""
     for n in order:
         ciphertext += columns[n]
