@@ -31,12 +31,12 @@ def vignere_encipher(text, key):
         i = i + 1
     return result
 
-def polybius_encipher(text, keyword, cols, rows):
+def polybius_encipher(text, keyword, cols, rows, alphabet):
     cols = range(1, int(cols) + 1)
     rows = range(1, int(rows) + 1)
     text = text.upper()
     letters_dict = {}
-    alphabet = list("ABCDEFGHIKLMNOPQRSTUVWXYZ")
+    alphabet = list(alphabet)
     keyword = keyword.replace("J", "I")
     keyword = keyword.upper()
     key_letters = list(keyword)
@@ -58,7 +58,7 @@ def polybius_encipher(text, keyword, cols, rows):
     return result
 
 
-def polybius_decipher(ciphertext, keyword, cols, rows):
+def polybius_decipher(ciphertext, keyword, cols, rows, alphabet):
     cols = range(1, int(cols) + 1)
     rows = range(1, int(rows) + 1)
     ciphertext = ciphertext.replace(" ", "")
@@ -66,7 +66,7 @@ def polybius_decipher(ciphertext, keyword, cols, rows):
     ciphertext_list = [ciphertext[i:i+2] for i in range(0, len(ciphertext), 2)]
     print(ciphertext)
     letters_dict = {}
-    alphabet = list("ABCDEFGHIKLMNOPQRSTUVWXYZ")
+    alphabet = list(alphabet)
     keyword = keyword.replace("J", "I")
     keyword = keyword.upper()
     key_letters = list(keyword)

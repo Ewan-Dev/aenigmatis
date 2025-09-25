@@ -51,7 +51,9 @@ while True:
             keyword = input("Keyword: ")
             columns = input("Columns (type 5 for alphabet): ")
             rows = input("Rows (type 5 for alphabet): ")
-            polybius_ciphertext = polybius_encipher(plaintext, keyword, columns, rows)
+            alphabet = input("Alphabet (Leave blank for default A-Z ): ")
+            alphabet = alphabet if alphabet else "ABCDEFGHIKLMNOPQRSTUVWXYZ"
+            polybius_ciphertext = polybius_encipher(plaintext, keyword, columns, rows, alphabet)
             print(f"{BOLD}{polybius_ciphertext}{RESET}")
     elif command == "decode":
         for cipher in ciphers:
@@ -72,7 +74,10 @@ while True:
             keyword = input("Keyword: ")
             columns = input("Columns (type 5 for alphabet): ")
             rows = input("Rows (type 5 for alphabet): ")
-            polybius_ciphertext = polybius_decipher(ciphertext, keyword, columns, rows)
+            alphabet = input("Alphabet (Leave blank for default A-Z ): ")
+            alphabet = alphabet if alphabet else "ABCDEFGHIKLMNOPQRSTUVWXYZ"
+            polybius_ciphertext = polybius_decipher(ciphertext, keyword, columns, rows, alphabet)
+
             print(f"{BOLD}{polybius_ciphertext}{RESET}")
     elif command == "bigram":
             text = input("Paste you text here: ")
