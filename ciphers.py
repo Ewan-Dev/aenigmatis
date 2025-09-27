@@ -92,6 +92,8 @@ def ADFGVX_encipher(text, keyword_sub, keyword_trans):
     rows = range(1, 7)
     text = text.upper()
     text = text.replace(" ", "")
+    keyword_sub = keyword_sub.upper().replace(" ", "")
+    keyword_trans = keyword_trans.upper().replace(" ", "")
     letters_dict = {}
     ADFGVX_list = list("ADFGVX")
     alphabet = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
@@ -119,20 +121,81 @@ def ADFGVX_encipher(text, keyword_sub, keyword_trans):
             
     substituted = "".join(letters_dict[char] if char in letters_dict else char for char in text )
 
-    keyword_trans_len = len(keyword_trans)
-    columns = [ '' for i in range(keyword_trans_len)]
+    trans_key = ""
+    for char in keyword_trans:
+        if char not in trans_key:
+            trans_key += char
+    columns_num = len(trans_key) 
+    columns = [ '' for i in range(columns_num)]
 
     for i, char in enumerate(substituted):
-        columns[ i % keyword_trans_len ] += char
-    cleaned_trans_keyword = ""
-    for char in keyword_trans:
-        if char in keyword_trans and char not in cleaned_trans_keyword:
-            cleaned_trans_keyword  += char
-    cleaned_trans_keyword = list(cleaned_trans_keyword)
-    order = sorted(range(len(keyword_trans)), key=lambda x: keyword_trans[x] )
+        columns[ i % columns_num ] += char
+
+    order = sorted(range(columns_num), key=lambda x: trans_key[x] )
     ciphertext = ""
     for n in order:
         ciphertext += columns[n]
 
-    print(columns)
     return ciphertext
+
+def ADFGVX_decipher(ciphertext, keyword_sub, keyword_trans):
+    cols = range(1, 7)
+    rows = range(1, 7)
+    ciphertext = ciphertext.upper()
+    ciphertext = ciphertext.replace(" ", "")
+    keyword_sub = keyword_sub.upper().replace(" ", "")
+    keyword_trans = keyword_trans.upper().replace(" ", "")
+    letters_dict = {}
+    ADFGVX_list = list("ADFGVX")
+    alphabet = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+    
+    if  keyword_sub.isalpha() and keyword_trans.isalpha():
+        keyword_sub =  keyword_sub.upper()
+        keyword_trans =  keyword_trans.upper()
+    else: 
+        raise TypeError("Key can only contain letters (for now)")
+
+    trans_key = ""
+    for char in keyword_trans:
+        if char not in trans_key:
+            trans_key += char
+    columns_num = len(trans_key) 
+    order = sorted(range(len(trans_key)), key=lambda x: trans_key[x] )
+    column_min, column_add = divmod(len(ciphertext), columns_num)
+    column_lengths = [column_min + 1 if i < column_add else column_min for i in range(columns_num)]
+    columns = [''] * columns_num
+    pos = 0
+    for col_index in order:
+        length = column_lengths[col_index]
+        columns[col_index] = ciphertext[pos:pos+length]
+        pos += length
+
+    substituted = ""
+    reconstructed= ""
+    for row in range(column_lengths[0]):
+        for col in range(columns_num):
+            if row < len(columns[col]):
+                reconstructed += columns[col][row]
+    letters_dict = {}
+    ADFGVX_list = list("ADFGVX")
+    alphabet = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+
+    key_letters = list(keyword_sub)
+    key = ""
+    for char in keyword_sub:
+        if char in key_letters and char not in key:
+            key += char
+    for char in alphabet:
+        if char not in key_letters:
+            key += char
+    count = 0
+    coordinates_dict = {}
+    for row in rows:
+        for col in cols:
+            current_char = key[count]
+            coordinate = str(ADFGVX_list[row - 1]) + str(ADFGVX_list[col - 1])
+            coordinates_dict.update({coordinate: current_char})
+            count += 1
+            
+    substituted = "".join(coordinates_dict[reconstructed[i:i+2]] for i in range(0, len(reconstructed), 2) )
+    return substituted

@@ -1,5 +1,5 @@
 from utils import show_help, bigram_finder, trigram_finder, BOLD, RESET, ITALIC, YELLOW, RED, BLUE, CYAN, PURPLE # ANSI codes and help CLI function
-from ciphers import caesar_encipher, caesar_decipher, vignere_encipher, polybius_encipher, polybius_decipher, ADFGVX_encipher # Import ciphers
+from ciphers import caesar_encipher, caesar_decipher, vignere_encipher, polybius_encipher, polybius_decipher, ADFGVX_encipher, ADFGVX_decipher # Import ciphers
 
 # ASCII art
 ascii_art = f"""
@@ -85,8 +85,14 @@ while True:
             alphabet = input("Alphabet (Leave blank for default A-Z ): ")
             alphabet = alphabet if alphabet else "ABCDEFGHIKLMNOPQRSTUVWXYZ"
             polybius_ciphertext = polybius_decipher(ciphertext, keyword, columns, rows, alphabet)
-
             print(f"{BOLD}{polybius_ciphertext}{RESET}")
+        elif command == "4":
+            print("\n")
+            ciphertext = input("Ciphertext: ")
+            trans = input("Transpositional key: ")
+            sub = input("Substitution key: ")
+            ADFGVX_plaintext = ADFGVX_decipher(ciphertext, sub, trans)
+            print(f"{BOLD}{ADFGVX_plaintext}{RESET}")
     elif command == "bigram":
             text = input("Paste you text here: ")
             english_score = round(bigram_finder(text), 2)
