@@ -272,13 +272,19 @@ def morse_decipher(ciphertext):
 def columnar_transposition_encipher(plaintext, key):
     plaintext = plaintext.replace(" ", "")
     plaintext = plaintext.upper()
-    columns_num = len(key) 
+    key = key.upper().replace(" ", "")
+    trans_key = ""
+    for char in key:
+        if char not in trans_key:
+            trans_key += char
+
+    columns_num = len(trans_key) 
     columns = [ '' for i in range(columns_num)]
 
     for i, char in enumerate(plaintext):
         columns[ i % columns_num ] += char
 
-    order = sorted(range(columns_num), key=lambda x: key[x] )
+    order = sorted(range(columns_num), key=lambda x: trans_key[x] )
     ciphertext = ""
     for n in order:
         ciphertext += columns[n]
@@ -292,7 +298,7 @@ def columnar_transposition_decipher(ciphertext, key):
     for char in key:
         if char not in trans_key:
             trans_key += char
-
+    print(trans_key)
     columns_num = len(trans_key) 
 
     order = sorted(range(len(trans_key)), key=lambda x: trans_key[x] )
@@ -314,5 +320,3 @@ def columnar_transposition_decipher(ciphertext, key):
                 plaintext += columns[col][row]
     
     return plaintext
-
-print(columnar_transposition_decipher("ETEHORLELH", "KEYQ"))
