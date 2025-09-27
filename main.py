@@ -1,5 +1,5 @@
 from utils import show_help, bigram_finder, trigram_finder, BOLD, RESET, ITALIC, YELLOW, RED, BLUE, CYAN, PURPLE # ANSI codes and help CLI function
-from ciphers import caesar_encipher, caesar_decipher, vignere_encipher, polybius_encipher, polybius_decipher, ADFGVX_encipher, ADFGVX_decipher, morse_encipher, morse_decipher # Import ciphers
+from ciphers import caesar_encipher, caesar_decipher, vignere_encipher, polybius_encipher, polybius_decipher, ADFGVX_encipher, ADFGVX_decipher, morse_encipher, morse_decipher, columnar_transposition_encipher # Import ciphers
 
 # ASCII art
 ascii_art = f"""
@@ -24,7 +24,7 @@ print(f"Type {BOLD}'help'{RESET} to see a list of commands.")
 while True:
     command = input(f"> ").strip().lower()
     
-    ciphers = ["caesar", "vignere", "polybius", "ADFGVX", "morse"]
+    ciphers = ["caesar", "vignere", "polybius", "ADFGVX", "morse", "columnar transposition"]
 
     if command == "help":
         show_help()
@@ -66,6 +66,11 @@ while True:
             plaintext = input("Plaintext: ")
             morse_encipher = morse_encipher(plaintext)
             print(f"{BOLD}{morse_encipher}{RESET}")
+        elif command == "6":
+            plaintext = input("Plaintext: ")
+            key = input("Key: ")
+            col_trans_ciphertext = columnar_transposition_encipher(plaintext, key)
+            print(f"{BOLD}{col_trans_ciphertext}{RESET}")
         
     elif command == "decode":
         for cipher in ciphers:
@@ -101,6 +106,8 @@ while True:
             ciphertext = input("Ciphertext: ")
             morse_plaintext = morse_decipher(ciphertext)
             print(f"{BOLD}{morse_plaintext}{RESET}")
+        elif command == "6":
+            pass # TODO
     elif command == "bigram":
             text = input("Paste you text here: ")
             english_score = round(bigram_finder(text), 2)

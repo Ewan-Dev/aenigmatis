@@ -268,3 +268,18 @@ def morse_decipher(ciphertext):
             plaintext += '?'
     
     return plaintext
+
+def columnar_transposition_encipher(plaintext, key):
+    plaintext = plaintext.replace(" ", "")
+    plaintext = plaintext.upper()
+    columns_num = len(key) 
+    columns = [ '' for i in range(columns_num)]
+
+    for i, char in enumerate(plaintext):
+        columns[ i % columns_num ] += char
+
+    order = sorted(range(columns_num), key=lambda x: key[x] )
+    ciphertext = ""
+    for n in order:
+        ciphertext += columns[n]
+    return ciphertext
