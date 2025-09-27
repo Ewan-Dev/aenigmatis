@@ -1,5 +1,5 @@
 from utils import show_help, bigram_finder, trigram_finder, BOLD, RESET, ITALIC, YELLOW, RED, BLUE, CYAN, PURPLE # ANSI codes and help CLI function
-from ciphers import caesar_encipher, caesar_decipher, vignere_encipher, polybius_encipher, polybius_decipher, ADFGVX_encipher, ADFGVX_decipher, morse_encipher, morse_decipher, columnar_transposition_encipher # Import ciphers
+from ciphers import caesar_encipher, caesar_decipher, vignere_encipher, polybius_encipher, polybius_decipher, ADFGVX_encipher, ADFGVX_decipher, morse_encipher, morse_decipher, columnar_transposition_encipher, columnar_transposition_decipher # Import ciphers
 
 # ASCII art
 ascii_art = f"""
@@ -107,7 +107,10 @@ while True:
             morse_plaintext = morse_decipher(ciphertext)
             print(f"{BOLD}{morse_plaintext}{RESET}")
         elif command == "6":
-            pass # TODO
+            ciphertext = input("Ciphertext: ")
+            key = input("Key: ")
+            col_trans_plaintext = columnar_transposition_decipher(ciphertext, key)
+            print(f"{BOLD}{col_trans_plaintext}{RESET}")
     elif command == "bigram":
             text = input("Paste you text here: ")
             english_score = round(bigram_finder(text), 2)
