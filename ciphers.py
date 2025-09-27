@@ -283,3 +283,36 @@ def columnar_transposition_encipher(plaintext, key):
     for n in order:
         ciphertext += columns[n]
     return ciphertext
+
+def columnar_transposition_decipher(ciphertext, key):
+    ciphertext = ciphertext.upper().replace(" ", "")
+    key = key.upper().replace(" ", "")
+    
+    trans_key = ""
+    for char in key:
+        if char not in trans_key:
+            trans_key += char
+
+    columns_num = len(trans_key) 
+
+    order = sorted(range(len(trans_key)), key=lambda x: trans_key[x] )
+    
+    column_min, column_add = divmod(len(ciphertext), columns_num)
+    column_lengths = [column_min + 1 if i <  column_add else column_min for i in range(columns_num)]
+    columns = [''] * columns_num 
+    
+    pos = 0
+    for col_index in order:
+        length = column_lengths[col_index]
+        columns[col_index] = ciphertext[pos:pos+length]
+        pos += length
+    
+    plaintext = ""
+    for row in range(column_lengths[0]):
+        for col in range(columns_num):
+            if row < len(columns[col]):
+                plaintext += columns[col][row]
+    
+    return plaintext
+
+print(columnar_transposition_decipher("ETEHORLELH", "KEYQ"))
