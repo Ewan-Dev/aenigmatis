@@ -1,5 +1,5 @@
 from utils import show_help, bigram_finder, trigram_finder, BOLD, RESET, ITALIC, YELLOW, RED, BLUE, CYAN, PURPLE # ANSI codes and help CLI function
-from ciphers import caesar_encipher, caesar_decipher, vignere_encipher, polybius_encipher, polybius_decipher, ADFGVX_encipher, ADFGVX_decipher # Import ciphers
+from ciphers import caesar_encipher, caesar_decipher, vignere_encipher, polybius_encipher, polybius_decipher, ADFGVX_encipher, ADFGVX_decipher, morse_encipher # Import ciphers
 
 # ASCII art
 ascii_art = f"""
@@ -24,7 +24,7 @@ print(f"Type {BOLD}'help'{RESET} to see a list of commands.")
 while True:
     command = input(f"> ").strip().lower()
     
-    ciphers = ["caesar", "vignere", "polybius", "ADFGVX"]
+    ciphers = ["caesar", "vignere", "polybius", "ADFGVX", "morse"]
 
     if command == "help":
         show_help()
@@ -62,6 +62,10 @@ while True:
             sub = input("Substitution key: ")
             ADFGVX_ciphertext = ADFGVX_encipher(plaintext, sub, trans)
             print(f"{BOLD}{ADFGVX_ciphertext}{RESET}")
+        elif command == "5":
+            plaintext = input("Plaintext: ")
+            morse_encipher = morse_encipher(plaintext)
+            print(f"{BOLD}{morse_encipher}{RESET}")
         
     elif command == "decode":
         for cipher in ciphers:
@@ -93,6 +97,8 @@ while True:
             sub = input("Substitution key: ")
             ADFGVX_plaintext = ADFGVX_decipher(ciphertext, sub, trans)
             print(f"{BOLD}{ADFGVX_plaintext}{RESET}")
+        elif command == "5":
+            pass # TODO: next commit
     elif command == "bigram":
             text = input("Paste you text here: ")
             english_score = round(bigram_finder(text), 2)

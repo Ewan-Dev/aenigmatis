@@ -199,3 +199,37 @@ def ADFGVX_decipher(ciphertext, keyword_sub, keyword_trans):
             
     substituted = "".join(coordinates_dict[reconstructed[i:i+2]] for i in range(0, len(reconstructed), 2) )
     return substituted
+
+def morse_encipher(ciphertext):
+    morse_code = {
+    # Letters
+    'A': ".-",    'B': "-...",  'C': "-.-.",  'D': "-..",
+    'E': ".",     'F': "..-.",  'G': "--.",   'H': "....",
+    'I': "..",    'J': ".---",  'K': "-.-",   'L': ".-..",
+    'M': "--",    'N': "-.",    'O': "---",   'P': ".--.",
+    'Q': "--.-",  'R': ".-.",   'S': "...",   'T': "-",
+    'U': "..-",   'V': "...-",  'W': ".--",   'X': "-..-",
+    'Y': "-.--",  'Z': "--..",
+
+    # Numbers
+    '0': "-----", '1': ".----", '2': "..---", '3': "...--",
+    '4': "....-", '5': ".....", '6': "-....", '7': "--...",
+    '8': "---..", '9': "----.",
+
+    # Common symbols
+    '.': ".-.-.-",   ',': "--..--",   '?': "..--..",  "'": ".----.",
+    '!': "-.-.--",   '/': "-..-.",    '(': "-.--.",   ')': "-.--.-",
+    '&': ".-...",    ':': "---...",   ';': "-.-.-.",  '=': "-...-",
+    '+': ".-.-.",    '-': "-....-",   '_': "..--.-",  '"': ".-..-.",
+    '$': "...-..-",  '@': ".--.-.",   ' ': '/'        
+}
+
+    ciphertext = ciphertext.replace("’", "'")
+    plaintext = ""
+    for char in ciphertext.upper():
+        if char in morse_code:
+            plaintext += (morse_code[char] + ' ')
+        else:
+            plaintext += '?'
+    
+    return plaintext
