@@ -548,3 +548,7 @@ def trigram_finder(string):
     confidence_value = confidence/len(input_trigrams)
     return confidence_value
 
+def combine_ngrams(bigram_score, trigram_score):
+    weight = 1 / (1 + trigram_score)
+    score = ((bigram_score * weight) + (trigram_score * (1 - weight)))
+    return score
