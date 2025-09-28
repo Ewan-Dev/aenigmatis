@@ -1,4 +1,4 @@
-from utils import show_help, bigram_finder, trigram_finder, overall_english_score, BOLD, RESET, ITALIC, YELLOW, RED, BLUE, CYAN, PURPLE # ANSI codes and help CLI function
+from utils import show_help, bigram_finder, trigram_finder, overall_english_score, read_input, BOLD, RESET, ITALIC, YELLOW, RED, BLUE, CYAN, PURPLE # ANSI codes and help CLI function
 from ciphers import caesar_encipher, caesar_decipher, vignere_encipher, polybius_encipher, polybius_decipher, ADFGVX_encipher, ADFGVX_decipher, morse_encipher, morse_decipher, columnar_transposition_encipher, columnar_transposition_decipher # Import ciphers
 
 # ASCII art
@@ -34,20 +34,26 @@ while True:
         command = input(f"cipher: ")
         if command == "1":
             print("\n")
-            plaintext = input("Plaintext: ")
+            print("Ciphertext:")
+            plaintext = read_input()
+            print(plaintext)
             shift = input("Shift: ")
             caesar_ciphertext = caesar_encipher(plaintext, shift)
             print(f"{BOLD}{caesar_ciphertext}{RESET}")
             command = input(f"cipher: ")
         elif command == "2":
             print("\n")
-            plaintext = input("Plaintext: ")
+            print("Plaintext: ")
+            plaintext = read_input()
+            print(plaintext)
             key = input("Key: ")
             vignere_cipherttext = vignere_encipher(plaintext, key)
             print(f"{BOLD}{vignere_cipherttext}{RESET}")
         elif command == "3":
             print("\n")
-            plaintext = input("Plaintext: ")
+            print("Plaintext: ")
+            plaintext = read_input()
+            print(plaintext)
             keyword = input("Keyword: ")
             columns = input("Columns (type 5 for alphabet): ")
             rows = input("Rows (type 5 for alphabet): ")
@@ -57,17 +63,23 @@ while True:
             print(f"{BOLD}{polybius_ciphertext}{RESET}")
         elif command == "4":
             print("\n")
-            plaintext = input("Plaintext: ")
+            print("Plaintext: ")
+            plaintext = read_input()
+            print(plaintext)
             trans = input("Transpositional key: ")
             sub = input("Substitution key: ")
             ADFGVX_ciphertext = ADFGVX_encipher(plaintext, sub, trans)
             print(f"{BOLD}{ADFGVX_ciphertext}{RESET}")
         elif command == "5":
-            plaintext = input("Plaintext: ")
+            print("Plaintext: ")
+            plaintext = read_input()
+            print(plaintext)
             morse_encipher = morse_encipher(plaintext)
             print(f"{BOLD}{morse_encipher}{RESET}")
         elif command == "6":
-            plaintext = input("Plaintext: ")
+            print("Plaintext: ")
+            plaintext = read_input()
+            print(plaintext)
             key = input("Key: ")
             col_trans_ciphertext = columnar_transposition_encipher(plaintext, key)
             print(f"{BOLD}{col_trans_ciphertext}{RESET}")
@@ -77,8 +89,9 @@ while True:
             print(f"{YELLOW}{ciphers.index(cipher) + 1}. {cipher}{RESET}")
         command = input(f"cipher: ")
         if command == "1":
-            print("\n")
-            ciphertext = input("Ciphertext: ")
+            print("Ciphertext: ")
+            ciphertext = read_input()
+            print(ciphertext)
             shift = input("Shift: ")
             caesar_plaintext = caesar_decipher(ciphertext, shift)
             print(f"{BOLD}{caesar_plaintext}{RESET}")
@@ -87,7 +100,9 @@ while True:
             print(f"{RED}Feature not available yet!{RESET}")
         elif command == "3":
             print("\n")
-            ciphertext = input("Ciphertext: ")
+            print("Ciphertext: ")
+            ciphertext = read_input()
+            print(ciphertext)
             keyword = input("Keyword: ")
             columns = input("Columns (type 5 for alphabet): ")
             rows = input("Rows (type 5 for alphabet): ")
@@ -97,34 +112,46 @@ while True:
             print(f"{BOLD}{polybius_ciphertext}{RESET}")
         elif command == "4":
             print("\n")
-            ciphertext = input("Ciphertext: ")
+            print("Ciphertext: ")
+            ciphertext = read_input()
+            print(ciphertext)
             trans = input("Transpositional key: ")
             sub = input("Substitution key: ")
             ADFGVX_plaintext = ADFGVX_decipher(ciphertext, sub, trans)
             print(f"{BOLD}{ADFGVX_plaintext}{RESET}")
         elif command == "5":
-            ciphertext = input("Ciphertext: ")
+            print("Ciphertext: ")
+            ciphertext = read_input()
+            print(ciphertext)
             morse_plaintext = morse_decipher(ciphertext)
             print(f"{BOLD}{morse_plaintext}{RESET}")
         elif command == "6":
-            ciphertext = input("Ciphertext: ")
+            print("Ciphertext: ")
+            ciphertext = read_input()
+            print(ciphertext)
             key = input("Key: ")
             col_trans_plaintext = columnar_transposition_decipher(ciphertext, key)
             print(f"{BOLD}{col_trans_plaintext}{RESET}")
     elif command == "bigram":
-            text = input("Paste you text here: ")
+            print("Paste you text here: ")
+            text = read_input()
+            print(text)
             english_score = round(bigram_finder(text), 2)
             colour_message = (CYAN, "LIKELY ENGLISH") if english_score > 0.75 else ((RED, "UNLIKELY ENGLISH") if english_score < 0.25 else (YELLOW, "PROBABLY ENGLISH"))
             colour, message = colour_message
             print(f"English confidence: {colour}{BOLD}{english_score}{RESET} - {message}")
     elif command == "trigram":
-            text = input("Paste you text here: ")
+            print("Paste you text here: ")
+            text = read_input()
+            print(text)
             english_score = round(trigram_finder(text), 2)
             colour_message = (CYAN, "LIKELY ENGLISH") if english_score > 0.75 else ((RED, "UNLIKELY ENGLISH") if english_score < 0.25 else (YELLOW, "PROBABLY ENGLISH"))
             colour, message = colour_message
             print(f"English confidence: {colour}{BOLD}{english_score}{RESET} - {message}")
     elif command == "overall_eng_score":
-            text = input("Paste you text here: ")
+            print("Paste you text here: ")
+            text = read_input()
+            print(text)
             english_score = round(overall_english_score(text), 2)
             colour_message = (CYAN, "LIKELY ENGLISH") if english_score > 0.75 else ((RED, "UNLIKELY ENGLISH") if english_score < 0.25 else (YELLOW, "PROBABLY ENGLISH"))
             colour, message = colour_message

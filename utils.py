@@ -559,3 +559,29 @@ def overall_english_score(string):
     trigram_score = trigram_finder(string)
     overall_score = combine_ngrams(bigram_score, trigram_score)
     return overall_score
+
+def read_input():
+    import platform
+    import subprocess
+    import tempfile
+    import os
+
+    with tempfile.NamedTemporaryFile(mode="w+", suffix=".txt", delete=False) as file:
+        path = file.name
+    
+    try:
+        if platform.system() == "Windows":
+            subprocess.run(["notepad.exe", path])
+        else: 
+            subprocess.run(["nano", path])
+
+        with open(path, "r") as file:
+            content = file.read()
+        content = content[:-1] if content.endswith('\n') else content
+        return content
+
+    finally: 
+        try:
+            os.unlink(path)
+        except:
+            pass
