@@ -1,4 +1,4 @@
-from utils import show_help, bigram_finder, trigram_finder, BOLD, RESET, ITALIC, YELLOW, RED, BLUE, CYAN, PURPLE # ANSI codes and help CLI function
+from utils import show_help, bigram_finder, trigram_finder, overall_english_score, BOLD, RESET, ITALIC, YELLOW, RED, BLUE, CYAN, PURPLE # ANSI codes and help CLI function
 from ciphers import caesar_encipher, caesar_decipher, vignere_encipher, polybius_encipher, polybius_decipher, ADFGVX_encipher, ADFGVX_decipher, morse_encipher, morse_decipher, columnar_transposition_encipher, columnar_transposition_decipher # Import ciphers
 
 # ASCII art
@@ -120,6 +120,12 @@ while True:
     elif command == "trigram":
             text = input("Paste you text here: ")
             english_score = round(trigram_finder(text), 2)
+            colour_message = (CYAN, "LIKELY ENGLISH") if english_score > 0.75 else ((RED, "UNLIKELY ENGLISH") if english_score < 0.25 else (YELLOW, "PROBABLY ENGLISH"))
+            colour, message = colour_message
+            print(f"English confidence: {colour}{BOLD}{english_score}{RESET} - {message}")
+    elif command == "overall_eng_score":
+            text = input("Paste you text here: ")
+            english_score = round(overall_english_score(text), 2)
             colour_message = (CYAN, "LIKELY ENGLISH") if english_score > 0.75 else ((RED, "UNLIKELY ENGLISH") if english_score < 0.25 else (YELLOW, "PROBABLY ENGLISH"))
             colour, message = colour_message
             print(f"English confidence: {colour}{BOLD}{english_score}{RESET} - {message}")

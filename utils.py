@@ -9,13 +9,14 @@ PURPLE = '\033[35m'
 
 def show_help():
     print(f"{BOLD}Available Commands:{RESET}")
-    print(f"{YELLOW}help{RESET}      - Show this help message")
-    print(f"{YELLOW}encode{RESET}    - Encode a message")
-    print(f"{YELLOW}decode{RESET}    - Decode a message")
-    print(f"{YELLOW}ciper:{RESET}    - Out of the list above, enter a number")
-    print(f"{YELLOW}bigram{RESET}    - Uses bigrams to detect how likely input text is English")
-    print(f"{YELLOW}trigram{RESET}   - Uses trigrams to detect how likely input text is English")
-    print(f"{YELLOW}exit{RESET}      - Exit the program\n")
+    print(f"{YELLOW}help{RESET}            - Show this help message")
+    print(f"{YELLOW}encode{RESET}            - Encode a message")
+    print(f"{YELLOW}decode{RESET}            - Decode a message")
+    print(f"{YELLOW}ciper:{RESET}            - Out of the list above, enter a number")
+    print(f"{YELLOW}bigram{RESET}            - Uses bigrams to detect how likely input text is English")
+    print(f"{YELLOW}trigram{RESET}           - Uses trigrams to detect how likely input text is English")
+    print(f"{YELLOW}overall_eng_score{RESET} - Combines trigram and bigram with dynamic weighting for overalal score")
+    print(f"{YELLOW}exit{RESET}              - Exit the program\n")
 
 def bigram_finder(string):
     confidence = 0
@@ -552,3 +553,9 @@ def combine_ngrams(bigram_score, trigram_score):
     weight = 1 / (1 + trigram_score)
     score = ((bigram_score * weight) + (trigram_score * (1 - weight)))
     return score
+
+def overall_english_score(string):
+    bigram_score = bigram_finder(string)
+    trigram_score = trigram_finder(string)
+    overall_score = combine_ngrams(bigram_score, trigram_score)
+    return overall_score
