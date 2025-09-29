@@ -1,4 +1,4 @@
-from utils import show_help, bigram_finder, trigram_finder, overall_english_score, read_input, BOLD, RESET, ITALIC, YELLOW, RED, BLUE, CYAN, PURPLE # ANSI codes and help CLI function
+from utils import show_help, bigram_finder, trigram_finder, overall_english_score, read_input, kasiskis_method, BOLD, RESET, ITALIC, YELLOW, RED, BLUE, CYAN, PURPLE # ANSI codes and help CLI function
 from ciphers import caesar_encipher, caesar_decipher, vignere_encipher, polybius_encipher, polybius_decipher, ADFGVX_encipher, ADFGVX_decipher, morse_encipher, morse_decipher, columnar_transposition_encipher, columnar_transposition_decipher # Import ciphers
 
 # ASCII art
@@ -156,6 +156,12 @@ while True:
             colour_message = (CYAN, "LIKELY ENGLISH") if english_score > 0.75 else ((RED, "UNLIKELY ENGLISH") if english_score < 0.25 else (YELLOW, "PROBABLY ENGLISH"))
             colour, message = colour_message
             print(f"English confidence: {colour}{BOLD}{english_score}{RESET} - {message}")
+    elif command == "kasiski":
+            print("Paste you text here: ")
+            text = read_input()
+            print(text)
+            kasiski_result = kasiskis_method(text, 3)
+            print(f"Kasiski results: {kasiski_result}")
     else:
         print(f"Command {command} not found. ")
         print(f"Type {BOLD}'help'{RESET} to see a list of commands.")

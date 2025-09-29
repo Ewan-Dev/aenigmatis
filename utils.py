@@ -15,6 +15,7 @@ def show_help():
     print(f"{YELLOW}ciper:{RESET}            - Out of the list above, enter a number")
     print(f"{YELLOW}bigram{RESET}            - Uses bigrams to detect how likely input text is English")
     print(f"{YELLOW}trigram{RESET}           - Uses trigrams to detect how likely input text is English")
+    print(f"{YELLOW}kasiski{RESET}           - Uses Kasiski's method to determine vignere cipher keyword length")
     print(f"{YELLOW}overall_eng_score{RESET} - Combines trigram and bigram with dynamic weighting for overalal score")
     print(f"{YELLOW}exit{RESET}              - Exit the program\n")
 
@@ -585,3 +586,45 @@ def read_input():
             os.unlink(path)
         except:
             pass
+
+def kasiskis_method(ciphertext, sequence_len):
+    text = ciphertext.upper().replace(" ", "")
+    groups = []
+    for i in range(len(ciphertext) - sequence_len + 1):
+        group = text[i:i + sequence_len]
+        groups.append((group, i))
+
+    sequences = {}
+    for seq, pos in groups:
+        if seq not in sequences:
+            sequences[seq] = []
+        sequences[seq].append(pos)
+
+    repeated_sequences = {}
+    for seq, pos in sequences.items():
+        if len(pos) > 1:
+            repeated_sequences[seq] = pos
+
+    sequence_distances = []
+    for seq, pos in repeated_sequences.items():
+        for i in range(len(pos)):
+            for j in range(i + 1, len(pos)):
+                distance = pos[j] - pos[i]
+                sequence_distances.append(distance)
+
+    factors = []
+    for distance in sequence_distances:
+        for i in range(2, distance + 1):
+            if distance % i == 0:
+                factors.append(i)
+    
+    factors_count = {}
+    for factor in factors:
+        if factor in factors_count:
+            factors_count[factor] += 1
+        else:
+            factors_count[factor] = 1
+    
+    factors_sorted = sorted(factors_count.items(), key=lambda x : x[1], reverse=True )
+    
+    return factors_sorted
