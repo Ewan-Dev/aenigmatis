@@ -590,7 +590,7 @@ def read_input():
 def kasiskis_method(ciphertext, sequence_len):
     text = ciphertext.upper().replace(" ", "")
     groups = []
-    for i in range(len(ciphertext) - sequence_len + 1):
+    for i in range(len(text) - sequence_len + 1):
         group = text[i:i + sequence_len]
         groups.append((group, i))
 
