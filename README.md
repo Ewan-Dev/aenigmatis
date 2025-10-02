@@ -13,7 +13,8 @@ A deciphering/enciphering CLI tool
 - Polybius square cipher  
 - ADFGVX cipher  
 - Morse code  
-- Columnar transposition  
+- Columnar transposition
+- ROT13  
 
 ## Text Analysis
 - Bigram frequency analysis  
