@@ -1,5 +1,5 @@
 from utils import show_help, bigram_finder, trigram_finder, overall_english_score, read_input, kasiskis_method, BOLD, RESET, ITALIC, YELLOW, RED, BLUE, CYAN, PURPLE # ANSI codes and help CLI function
-from ciphers import caesar_encipher, caesar_decipher, vignere_encipher, polybius_encipher, polybius_decipher, ADFGVX_encipher, ADFGVX_decipher, morse_encipher, morse_decipher, columnar_transposition_encipher, columnar_transposition_decipher, ROT13_encipher # Import ciphers
+from ciphers import caesar_encipher, caesar_decipher, vignere_encipher, polybius_encipher, polybius_decipher, ADFGVX_encipher, ADFGVX_decipher, morse_encipher, morse_decipher, columnar_transposition_encipher, columnar_transposition_decipher, ROT13_encipher, ROT13_decipher # Import ciphers
 
 # ASCII art
 ascii_art = f"""
@@ -138,6 +138,13 @@ while True:
             key = input("Key: ")
             col_trans_plaintext = columnar_transposition_decipher(ciphertext, key)
             print(f"{BOLD}{col_trans_plaintext}{RESET}")
+        elif command == "7":
+            print("Ciphertext: ")
+            ciphertext = read_input()
+            print(ciphertext)
+            ROT13_plaintext = ROT13_decipher(ciphertext)
+            print(f"{BOLD}{ROT13_plaintext}{RESET}")
+        
     elif command == "bigram":
             print("Paste you text here: ")
             text = read_input()

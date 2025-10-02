@@ -324,3 +324,7 @@ def columnar_transposition_decipher(ciphertext, key):
 def ROT13_encipher(text):
     ciphertext = caesar_encipher(text, 13)
     return ciphertext
+
+def ROT13_decipher(text):
+    plaintext = caesar_decipher(text, 13)
+    return plaintext
