@@ -1,5 +1,5 @@
 from utils import show_help, bigram_finder, trigram_finder, overall_english_score, read_input, kasiskis_method, BOLD, RESET, ITALIC, YELLOW, RED, BLUE, CYAN, PURPLE # ANSI codes and help CLI function
-from ciphers import caesar_encipher, caesar_decipher, vignere_encipher, polybius_encipher, polybius_decipher, ADFGVX_encipher, ADFGVX_decipher, morse_encipher, morse_decipher, columnar_transposition_encipher, columnar_transposition_decipher # Import ciphers
+from ciphers import caesar_encipher, caesar_decipher, vignere_encipher, polybius_encipher, polybius_decipher, ADFGVX_encipher, ADFGVX_decipher, morse_encipher, morse_decipher, columnar_transposition_encipher, columnar_transposition_decipher, ROT13_encipher # Import ciphers
 
 # ASCII art
 ascii_art = f"""
@@ -24,7 +24,7 @@ print(f"Type {BOLD}'help'{RESET} to see a list of commands.")
 while True:
     command = input(f"> ").strip().lower()
     
-    ciphers = ["caesar", "vignere", "polybius", "ADFGVX", "morse", "columnar transposition"]
+    ciphers = ["caesar", "vignere", "polybius", "ADFGVX", "morse", "columnar transposition", "ROT13"]
 
     if command == "help":
         show_help()
@@ -83,6 +83,12 @@ while True:
             key = input("Key: ")
             col_trans_ciphertext = columnar_transposition_encipher(plaintext, key)
             print(f"{BOLD}{col_trans_ciphertext}{RESET}")
+        elif command == "7":
+            print("Plaintext: ")
+            plaintext = read_input()
+            print(plaintext)
+            ROT13_ciphertext = ROT13_encipher(plaintext)
+            print(f"{BOLD}{ROT13_ciphertext}{RESET}")
         
     elif command == "decode":
         for cipher in ciphers:

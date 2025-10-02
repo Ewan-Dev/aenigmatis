@@ -320,3 +320,7 @@ def columnar_transposition_decipher(ciphertext, key):
                 plaintext += columns[col][row]
     
     return plaintext
+
+def ROT13_encipher(text):
+    ciphertext = caesar_encipher(text, 13)
+    return ciphertext
