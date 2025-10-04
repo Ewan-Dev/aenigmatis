@@ -342,3 +342,28 @@ def ROT13_encipher(text):
 def ROT13_decipher(text):
     plaintext = caesar_decipher(text, 13)
     return plaintext
+
+def railfence_encipher(text, rails, offset):
+    rail_lists = ["" for _ in range(rails)]
+    current_rail = offset
+    direction = 1
+
+    if current_rail == rails - 1:
+        direction = -1
+
+    else:
+        direction = 1
+
+    for i, char in enumerate(text):
+        rail_lists[current_rail] += char
+        if current_rail == 0:
+            direction = 1
+        elif current_rail == rails - 1:
+            direction = -1
+        current_rail += direction
+
+
+    ciphertext = ''.join(rail_lists)
+    return ciphertext
+
+print(railfence_encipher("gabo gabo woo", 2, 1))

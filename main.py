@@ -107,7 +107,7 @@ while True:
             print(ciphertext)
             key = input("Keyword: ")
             vignere_plaintext = vignere_decipher(ciphertext, key)
-            print(f"{BOLD}{vignere_plaintext}{RESET}")
+            print(f"{BOLgD}{vignere_plaintext}{RESET}")
         elif command == "3":
             print("\n")
             print("Ciphertext: ")
