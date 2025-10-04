@@ -16,6 +16,7 @@ A deciphering/enciphering CLI tool
 - Columnar transposition
 - ROT13  
 - Rail fence (zig-zag)
+- Autokey/Autoclave
 
 ## Text Analysis
 - Bigram frequency analysis  
