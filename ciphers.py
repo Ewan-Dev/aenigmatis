@@ -413,5 +413,3 @@ def railfence_decipher(text, rails, offset):
         current_rail += direction
 
     return plainntext
-
-print(railfence_decipher("el olhlowrd", 2, 1))
