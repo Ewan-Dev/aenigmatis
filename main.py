@@ -200,6 +200,8 @@ while True:
             print(text)
             non_alpha_result = remove_non_alphabetic(text)
             print(f"Non-alphabetic string: {non_alpha_result}")
+    elif command == "exit":
+            exit()
     else:
         print(f"Command {command} not found. ")
         print(f"Type {BOLD}'help'{RESET} to see a list of commands.")
