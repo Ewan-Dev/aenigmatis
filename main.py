@@ -1,5 +1,5 @@
 from utils import show_help, bigram_finder, trigram_finder, overall_english_score, read_input, kasiskis_method, remove_non_alphabetic, BOLD, RESET, ITALIC, YELLOW, RED, BLUE, CYAN, PURPLE # ANSI codes and help CLI function
-from ciphers import caesar_encipher, caesar_decipher, vignere_encipher,vignere_decipher, polybius_encipher, polybius_decipher, ADFGVX_encipher, ADFGVX_decipher, morse_encipher, morse_decipher, columnar_transposition_encipher, columnar_transposition_decipher, ROT13_encipher, ROT13_decipher, railfence_encipher, railfence_decipher, autokey_encipher # Import ciphers
+from ciphers import caesar_encipher, caesar_decipher, vignere_encipher,vignere_decipher, polybius_encipher, polybius_decipher, ADFGVX_encipher, ADFGVX_decipher, morse_encipher, morse_decipher, columnar_transposition_encipher, columnar_transposition_decipher, ROT13_encipher, ROT13_decipher, railfence_encipher, railfence_decipher, autokey_encipher, autokey_decipher # Import ciphers
 
 # ASCII art
 ascii_art = f"""
@@ -171,8 +171,12 @@ while True:
             railfence_plaintext = railfence_decipher(ciphertext, int(rows), int(offset))
             print(f"{BOLD}{railfence_plaintext}{RESET}")
         elif command == "9":
-            print(f"{RED}Coming soon!{RESET}")
-            pass
+            print("Plaintext: ")
+            ciphertext = read_input()
+            print(ciphertext)
+            keyword = input("Keyword: ")
+            autokey_plaintext = autokey_decipher(ciphertext, keyword)
+            print(f"{BOLD}{autokey_plaintext}{RESET}")
     elif command == "bigram":
             print("Paste you text here: ")
             text = read_input()

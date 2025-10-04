@@ -429,3 +429,20 @@ def autokey_encipher(text, keyword):
         else:
             result += char
     return result
+
+def autokey_decipher(text, keyword):
+    result = ""
+    key = keyword
+    i = 0
+    for char in text:
+        if char.isalpha():
+            shift = ord(key[i % len(key)]) - 65 if str(key[i % len(key)]).isupper() else ord(key[i % len(key)]) - 97
+            ascii_shift = ord('A') if char.isupper() else ord('a')
+            plain_char = chr((((ord(char) - ascii_shift) - int(shift)) % 26) + ascii_shift)
+            key += plain_char
+            result += plain_char
+            i += 1
+        else:
+            result += char
+    return result
+print(autokey_decipher("cwtpvu texv!", "apple"))
