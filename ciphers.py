@@ -366,4 +366,52 @@ def railfence_encipher(text, rails, offset):
     ciphertext = ''.join(rail_lists)
     return ciphertext
 
-print(railfence_encipher("gabo gabo woo", 2, 1))
+
+def railfence_decipher(text, rails, offset):
+    pattern = []
+    current_rail = offset
+    direction = 1
+
+    if current_rail == rails - 1:
+        direction = -1
+    else:
+        direction = 1
+
+    for i in range(len(text)):
+        pattern.append(current_rail)
+        if current_rail == 0:
+            direction = 1
+        elif current_rail == rails - 1:
+            direction = -1
+        current_rail += direction
+
+    rail_lengths = [pattern.count(r) for r in range(rails)]
+    rail_list = []
+    rail_index = 0
+    for count in rail_lengths:
+        rail_list.append(list(text[rail_index:rail_index+count]))
+        rail_index += count
+    
+    plainntext = ""
+    rail_positions = [0] * rails
+    current_rail = offset
+    direction = 1
+
+    if current_rail == rails - 1:
+        direction = -1
+    else:
+        direction = 1
+
+    for i in range(len(text)):
+        plainntext += rail_list[current_rail][rail_positions[current_rail]]
+        rail_positions[current_rail] += 1
+
+        if current_rail == 0:
+            direction = 1
+        elif current_rail == rails - 1:
+            direction = -1
+        current_rail += direction
+
+    return plainntext
+
+print(railfence_decipher("el olhlowrd", 2, 1))
