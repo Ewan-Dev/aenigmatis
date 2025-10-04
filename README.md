@@ -15,6 +15,7 @@ A deciphering/enciphering CLI tool
 - Morse code  
 - Columnar transposition
 - ROT13  
+- Rail fence (zig-zag)
 
 ## Text Analysis
 - Bigram frequency analysis  
