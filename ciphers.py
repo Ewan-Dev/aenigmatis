@@ -1,3 +1,5 @@
+from utils import remove_non_alphabetic
+
 def caesar_encipher(text, shift):
     result = ""
     for char in text:
@@ -413,3 +415,17 @@ def railfence_decipher(text, rails, offset):
         current_rail += direction
 
     return plainntext
+
+def autokey_encipher(text, keyword):
+    result = ""
+    key = remove_non_alphabetic(keyword + text)
+    i = 0
+    for char in text:
+        if char.isalpha():
+            shift = ord(key[i % len(key)]) - 65 if str(key[i % len(key)]).isupper() else ord(key[i % len(key)]) - 97
+            ascii_shift = ord('A') if char.isupper() else ord('a')
+            result += chr((((ord(char) - ascii_shift) + int(shift)) % 26) + ascii_shift)
+            i = i + 1
+        else:
+            result += char
+    return result

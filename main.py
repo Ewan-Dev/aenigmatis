@@ -1,5 +1,5 @@
 from utils import show_help, bigram_finder, trigram_finder, overall_english_score, read_input, kasiskis_method, remove_non_alphabetic, BOLD, RESET, ITALIC, YELLOW, RED, BLUE, CYAN, PURPLE # ANSI codes and help CLI function
-from ciphers import caesar_encipher, caesar_decipher, vignere_encipher,vignere_decipher, polybius_encipher, polybius_decipher, ADFGVX_encipher, ADFGVX_decipher, morse_encipher, morse_decipher, columnar_transposition_encipher, columnar_transposition_decipher, ROT13_encipher, ROT13_decipher, railfence_encipher, railfence_decipher # Import ciphers
+from ciphers import caesar_encipher, caesar_decipher, vignere_encipher,vignere_decipher, polybius_encipher, polybius_decipher, ADFGVX_encipher, ADFGVX_decipher, morse_encipher, morse_decipher, columnar_transposition_encipher, columnar_transposition_decipher, ROT13_encipher, ROT13_decipher, railfence_encipher, railfence_decipher, autokey_encipher # Import ciphers
 
 # ASCII art
 ascii_art = f"""
@@ -24,7 +24,7 @@ print(f"Type {BOLD}'help'{RESET} to see a list of commands.")
 while True:
     command = input(f"> ").strip().lower()
     
-    ciphers = ["caesar", "vignere", "polybius", "ADFGVX", "morse", "columnar transposition", "ROT13", "railfence (zig-zag)"]
+    ciphers = ["caesar", "vignere", "polybius", "ADFGVX", "morse", "columnar transposition", "ROT13", "railfence (zig-zag)", "autokey"]
 
     if command == "help":
         show_help()
@@ -97,7 +97,13 @@ while True:
             offset = input("Offset: ")
             railfence_ciphertext = railfence_encipher(plaintext, int(rows), int(offset))
             print(f"{BOLD}{railfence_ciphertext}{RESET}")
-        
+        elif command == "9":
+            print("Plaintext: ")
+            plaintext = read_input()
+            print(plaintext)
+            keyword = input("Keyword: ")
+            autokey_ciphertext = autokey_encipher(plaintext, keyword)
+            print(f"{BOLD}{autokey_ciphertext}{RESET}")
     elif command == "decode":
         for cipher in ciphers:
             print(f"{YELLOW}{ciphers.index(cipher) + 1}. {cipher}{RESET}")
@@ -164,6 +170,9 @@ while True:
             offset = input("Offset: ")
             railfence_plaintext = railfence_decipher(ciphertext, int(rows), int(offset))
             print(f"{BOLD}{railfence_plaintext}{RESET}")
+        elif command == "9":
+            print(f"{RED}Coming soon!{RESET}")
+            pass
     elif command == "bigram":
             print("Paste you text here: ")
             text = read_input()
