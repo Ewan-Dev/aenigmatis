@@ -1,4 +1,4 @@
-from utils import show_help, bigram_finder, trigram_finder, overall_english_score, read_input, kasiskis_method, BOLD, RESET, ITALIC, YELLOW, RED, BLUE, CYAN, PURPLE # ANSI codes and help CLI function
+from utils import show_help, bigram_finder, trigram_finder, overall_english_score, read_input, kasiskis_method, remove_non_alphabetic, BOLD, RESET, ITALIC, YELLOW, RED, BLUE, CYAN, PURPLE # ANSI codes and help CLI function
 from ciphers import caesar_encipher, caesar_decipher, vignere_encipher,vignere_decipher, polybius_encipher, polybius_decipher, ADFGVX_encipher, ADFGVX_decipher, morse_encipher, morse_decipher, columnar_transposition_encipher, columnar_transposition_decipher, ROT13_encipher, ROT13_decipher, railfence_encipher, railfence_decipher # Import ciphers
 
 # ASCII art
@@ -194,6 +194,12 @@ while True:
             print(text)
             kasiski_result = kasiskis_method(text, 3)
             print(f"Kasiski results: {kasiski_result}")
+    elif command == "non_alpha":
+            print("Paste you text here: ")
+            text = read_input()
+            print(text)
+            non_alpha_result = remove_non_alphabetic(text)
+            print(f"Non-alphabetic string: {non_alpha_result}")
     else:
         print(f"Command {command} not found. ")
         print(f"Type {BOLD}'help'{RESET} to see a list of commands.")

@@ -16,6 +16,7 @@ def show_help():
     print(f"{YELLOW}bigram{RESET}            - Uses bigrams to detect how likely input text is English")
     print(f"{YELLOW}trigram{RESET}           - Uses trigrams to detect how likely input text is English")
     print(f"{YELLOW}kasiski{RESET}           - Uses Kasiski's method to determine vignere cipher keyword length")
+    print(f"{YELLOW}non_alpha{RESET}         - Removes non-alphabetic characters from a string, including spaces")
     print(f"{YELLOW}overall_eng_score{RESET} - Combines trigram and bigram with dynamic weighting for overalal score")
     print(f"{YELLOW}exit{RESET}              - Exit the program\n")
 
@@ -628,3 +629,10 @@ def kasiskis_method(ciphertext, sequence_len):
     factors_sorted = sorted(factors_count.items(), key=lambda x : x[1], reverse=True )
     
     return factors_sorted
+
+def remove_non_alphabetic(text):
+    non_alphabetic = ""
+    for char in text:
+        if char.isalpha():
+            non_alphabetic += char
+    return non_alphabetic

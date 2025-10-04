@@ -20,7 +20,8 @@ A deciphering/enciphering CLI tool
 ## Text Analysis
 - Bigram frequency analysis  
 - Trigram frequency analysis  
-- Overall English (trigram + bigram w/ dynamic wieghting)  
+- Overall English (trigram + bigram w/ dynamic weighting)
+- Remove all non-alphabetic characters from a string
 
 ## Cryptanalysis
 - Kasiski's method
