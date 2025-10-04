@@ -1,5 +1,5 @@
 from utils import show_help, bigram_finder, trigram_finder, overall_english_score, read_input, kasiskis_method, BOLD, RESET, ITALIC, YELLOW, RED, BLUE, CYAN, PURPLE # ANSI codes and help CLI function
-from ciphers import caesar_encipher, caesar_decipher, vignere_encipher,vignere_decipher, polybius_encipher, polybius_decipher, ADFGVX_encipher, ADFGVX_decipher, morse_encipher, morse_decipher, columnar_transposition_encipher, columnar_transposition_decipher, ROT13_encipher, ROT13_decipher # Import ciphers
+from ciphers import caesar_encipher, caesar_decipher, vignere_encipher,vignere_decipher, polybius_encipher, polybius_decipher, ADFGVX_encipher, ADFGVX_decipher, morse_encipher, morse_decipher, columnar_transposition_encipher, columnar_transposition_decipher, ROT13_encipher, ROT13_decipher, railfence_encipher # Import ciphers
 
 # ASCII art
 ascii_art = f"""
@@ -24,7 +24,7 @@ print(f"Type {BOLD}'help'{RESET} to see a list of commands.")
 while True:
     command = input(f"> ").strip().lower()
     
-    ciphers = ["caesar", "vignere", "polybius", "ADFGVX", "morse", "columnar transposition", "ROT13"]
+    ciphers = ["caesar", "vignere", "polybius", "ADFGVX", "morse", "columnar transposition", "ROT13", "railfence (zig-zag)"]
 
     if command == "help":
         show_help()
@@ -89,6 +89,14 @@ while True:
             print(plaintext)
             ROT13_ciphertext = ROT13_encipher(plaintext)
             print(f"{BOLD}{ROT13_ciphertext}{RESET}")
+        elif command == "8":
+            print("Plaintext: ")
+            plaintext = read_input()
+            print(plaintext)
+            rows = input("Rows: ")
+            offset = input("Offset: ")
+            railfence_ciphertext = railfence_encipher(plaintext, int(rows), int(offset))
+            print(f"{BOLD}{railfence_ciphertext}{RESET}")
         
     elif command == "decode":
         for cipher in ciphers:
@@ -148,7 +156,9 @@ while True:
             print(ciphertext)
             ROT13_plaintext = ROT13_decipher(ciphertext)
             print(f"{BOLD}{ROT13_plaintext}{RESET}")
-        
+        elif command == "8":
+            print(f"{RED}Coming soon{RESET}")
+            pass
     elif command == "bigram":
             print("Paste you text here: ")
             text = read_input()
