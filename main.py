@@ -206,7 +206,9 @@ while True:
             text = read_input()
             print(text)
             kasiski_result = kasiskis_method(text, 3)
-            print(f"Kasiski results: {kasiski_result}")
+            print(f"Kasiski results: \n")
+            print(f"{BLUE}{ITALIC}Frequency{RESET}    {PURPLE}{BOLD}Length{RESET}")
+            print('\n'.join(f"{BLUE}{ITALIC}{freq}{RESET}    {PURPLE}{BOLD}{length}{RESET}" for length, freq in kasiski_result))
     elif command == "non_alpha":
             print("Paste you text here: ")
             text = read_input()

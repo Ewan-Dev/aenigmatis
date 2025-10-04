@@ -445,4 +445,3 @@ def autokey_decipher(text, keyword):
         else:
             result += char
     return result
-print(autokey_decipher("cwtpvu texv!", "apple"))
