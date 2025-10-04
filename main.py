@@ -1,5 +1,5 @@
 from utils import show_help, bigram_finder, trigram_finder, overall_english_score, read_input, kasiskis_method, BOLD, RESET, ITALIC, YELLOW, RED, BLUE, CYAN, PURPLE # ANSI codes and help CLI function
-from ciphers import caesar_encipher, caesar_decipher, vignere_encipher, polybius_encipher, polybius_decipher, ADFGVX_encipher, ADFGVX_decipher, morse_encipher, morse_decipher, columnar_transposition_encipher, columnar_transposition_decipher, ROT13_encipher, ROT13_decipher # Import ciphers
+from ciphers import caesar_encipher, caesar_decipher, vignere_encipher,vignere_decipher, polybius_encipher, polybius_decipher, ADFGVX_encipher, ADFGVX_decipher, morse_encipher, morse_decipher, columnar_transposition_encipher, columnar_transposition_decipher, ROT13_encipher, ROT13_decipher # Import ciphers
 
 # ASCII art
 ascii_art = f"""
@@ -102,8 +102,12 @@ while True:
             caesar_plaintext = caesar_decipher(ciphertext, shift)
             print(f"{BOLD}{caesar_plaintext}{RESET}")
         elif command == "2":
-            print("\n")
-            print(f"{RED}Feature not available yet!{RESET}")
+            print("Ciphertext: ")
+            ciphertext = read_input()
+            print(ciphertext)
+            key = input("Keyword: ")
+            vignere_plaintext = vignere_decipher(ciphertext, key)
+            print(f"{BOLD}{vignere_plaintext}{RESET}")
         elif command == "3":
             print("\n")
             print("Ciphertext: ")
