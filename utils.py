@@ -1,3 +1,5 @@
+import numpy as np
+
 BOLD = '\033[1m'
 RESET = '\033[0m'
 ITALIC = '\033[3m'
@@ -636,3 +638,15 @@ def remove_non_alphabetic(text):
         if char.isalpha():
             non_alphabetic += char
     return non_alphabetic
+
+def mod_inverse(num, modulo):
+    for x in range(1, modulo):
+        if (num * x) % modulo == 1:
+            return x
+        
+def matrix_mod_inverse(matrix, modulo):
+    determinant = int(round(np.linalg.det(matrix)))
+    determinant_inverse = mod_inverse(determinant, modulo)
+    cofactor_matrix = np.linalg.inv(matrix).T * np.linalg.det(matrix)
+    matrix_adjugate = np.round(cofactor_matrix).astype(int) % modulo
+    return (determinant_inverse * matrix_adjugate) % modulo

@@ -1,4 +1,4 @@
-from utils import remove_non_alphabetic
+from utils import remove_non_alphabetic, mod_inverse, matrix_mod_inverse
 from math import gcd
 import numpy as np
 
@@ -471,6 +471,37 @@ def hill_encipher(plaintext, key, size):
         cipher_matrix = (key @ matrix) % 26
         ciphertext = ''.join(chr(int(num) + ord('A')) for num in cipher_matrix.flatten('F'))
         return ciphertext
+    else:
+        raise ValueError("Key is invalid: determinant of key matrix is not coprime with 26")
+    
+
+def hill_decipher(ciphertext, key, size):
+    key_nums = []
+    if len(key) == size ** 2:
+        for char in key:
+            if char.isalpha():
+                key_nums.append(ord(char.upper()) - ord('A'))
+    else:
+        raise ValueError("Key is invalid: key must be equal to size squared!")
+    key = np.array(key_nums).reshape(-1, size).T
+    print("Key: ", key)
+    determinant = round(np.linalg.det(key))
+    determinant_inverse = mod_inverse(determinant, 26)
+    if gcd(determinant, 26) == 1:
+        ciphertext_nums = []
+        ciphertext = ''.join(char.upper() for char in ciphertext if char.isalpha())
+        if len(ciphertext) % size != 0:
+                ciphertext += 'X' * (size - (len(ciphertext) % size))
+        for char in ciphertext:
+            if char.isalpha():
+                ciphertext_nums.append(ord(char.upper()) - ord('A'))
+        inverse_key = matrix_mod_inverse(key, 26)
+        plaintext = ''
+        for i in range(0, len(ciphertext_nums), size):
+            chunk = np.array(ciphertext_nums[i:i+size])
+            decrypted_chunk = (inverse_key @ (chunk)) % 26
+            plaintext += ''.join(chr(int(num) + ord('A')) for num in decrypted_chunk)
+        return plaintext
     else:
         raise ValueError("Key is invalid: determinant of key matrix is not coprime with 26")
     
