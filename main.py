@@ -1,5 +1,5 @@
 from utils import show_help, bigram_finder, trigram_finder, overall_english_score, read_input, kasiskis_method, remove_non_alphabetic, BOLD, RESET, ITALIC, YELLOW, RED, BLUE, CYAN, PURPLE # ANSI codes and help CLI function
-from ciphers import caesar_encipher, caesar_decipher, vignere_encipher,vignere_decipher, polybius_encipher, polybius_decipher, ADFGVX_encipher, ADFGVX_decipher, morse_encipher, morse_decipher, columnar_transposition_encipher, columnar_transposition_decipher, ROT13_encipher, ROT13_decipher, railfence_encipher, railfence_decipher, autokey_encipher, autokey_decipher, hill_encipher# Import ciphers
+from ciphers import caesar_encipher, caesar_decipher, vignere_encipher,vignere_decipher, polybius_encipher, polybius_decipher, ADFGVX_encipher, ADFGVX_decipher, morse_encipher, morse_decipher, columnar_transposition_encipher, columnar_transposition_decipher, ROT13_encipher, ROT13_decipher, railfence_encipher, railfence_decipher, autokey_encipher, autokey_decipher, hill_encipher, hill_decipher # Import ciphers
 
 # ASCII art
 ascii_art = f"""
@@ -186,8 +186,13 @@ while True:
             autokey_plaintext = autokey_decipher(ciphertext, keyword)
             print(f"{BOLD}{autokey_plaintext}{RESET}")
         elif command == "10":
-            print(f"{RED}Coming soon!{RESET}")
-            pass
+            print("Plaintext: ")
+            ciphertext = read_input()
+            print(ciphertext)
+            keyword = input("Keyword: ")
+            size = input("Size (2,3...): ")
+            hill_plaintext = hill_decipher(ciphertext, keyword, int(size))
+            print(f"{BOLD}{hill_plaintext}{RESET}")
     elif command == "bigram":
             print("Paste you text here: ")
             text = read_input()
