@@ -46,6 +46,7 @@ A deciphering, enciphering and cryptanalysis CLI tool.
 - ROT13  
 - Rail fence (zig-zag)  
 - Autokey/Autoclave  
+- Hill
 
 ### Text Analysis  
 - Bigram frequency analysis  
