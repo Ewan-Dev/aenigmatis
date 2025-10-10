@@ -1,4 +1,6 @@
 from utils import remove_non_alphabetic
+from math import gcd
+import numpy as np
 
 def caesar_encipher(text, shift):
     result = ""
@@ -445,3 +447,30 @@ def autokey_decipher(text, keyword):
         else:
             result += char
     return result
+
+def hill_encipher(plaintext, key, size):
+    key_nums = []
+    if len(key) == size ** 2:
+        for char in key:
+            if char.isalpha():
+                key_nums.append(ord(char.upper()) - ord('A'))
+    else:
+        raise ValueError("Key is invalid: key must be equal to size squared!")
+    key = np.array(key_nums).reshape(-1, size)
+    print("Key: ", key)
+    determinant = round(np.linalg.det(key))
+    if gcd(determinant, 26) == 1:
+        plaintext_nums = []
+        plaintext = ''.join(char.upper() for char in plaintext if char.isalpha())
+        if len(plaintext) % size != 0:
+                plaintext += 'X' * (size - (len(plaintext) % size))
+        for char in plaintext:
+            if char.isalpha():
+                plaintext_nums.append(ord(char.upper()) - ord('A'))
+        matrix = np.array(plaintext_nums).reshape(-1, size).T
+        cipher_matrix = (key @ matrix) % 26
+        ciphertext = ''.join(chr(int(num) + ord('A')) for num in cipher_matrix.flatten('F'))
+        return ciphertext
+    else:
+        raise ValueError("Key is invalid: determinant of key matrix is not coprime with 26")
+    
