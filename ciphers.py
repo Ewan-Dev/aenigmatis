@@ -450,6 +450,7 @@ def autokey_decipher(text, keyword):
 
 def hill_encipher(plaintext, key, size):
     key_nums = []
+    plaintext = remove_non_alphabetic(plaintext)
     if len(key) == size ** 2:
         for char in key:
             if char.isalpha():
@@ -470,13 +471,17 @@ def hill_encipher(plaintext, key, size):
         matrix = np.array(plaintext_nums).reshape(-1, size).T
         cipher_matrix = (key @ matrix) % 26
         ciphertext = ''.join(chr(int(num) + ord('A')) for num in cipher_matrix.flatten('F'))
-        return ciphertext
+        ciphertext_spaces = ""
+        ciphertext_list = [ciphertext[i:i+5] for i in range(0, len(ciphertext), 5)]
+        ciphertext_spaces = ' '.join(ciphertext_list)
+        return ciphertext_spaces
     else:
         raise ValueError("Key is invalid: determinant of key matrix is not coprime with 26")
     
 
 def hill_decipher(ciphertext, key, size):
-    key_nums = []
+    key_nums = [] 
+    ciphertext = remove_non_alphabetic(ciphertext)
     if len(key) == size ** 2:
         for char in key:
             if char.isalpha():
@@ -501,7 +506,9 @@ def hill_decipher(ciphertext, key, size):
             chunk = np.array(ciphertext_nums[i:i+size])
             decrypted_chunk = (inverse_key @ (chunk)) % 26
             plaintext += ''.join(chr(int(num) + ord('A')) for num in decrypted_chunk)
-        return plaintext
+            plaintext_list = [plaintext[i:i+5] for i in range(0, len(plaintext), 5)]
+            plaintext_spaces = ' '.join(plaintext_list)
+        return plaintext_spaces
     else:
         raise ValueError("Key is invalid: determinant of key matrix is not coprime with 26")
     
