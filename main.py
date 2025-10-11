@@ -1,5 +1,5 @@
 from utils import show_help, bigram_finder, trigram_finder, overall_english_score, read_input, kasiskis_method, remove_non_alphabetic, BOLD, RESET, ITALIC, YELLOW, RED, BLUE, CYAN, PURPLE # ANSI codes and help CLI function
-from ciphers import caesar_encipher, caesar_decipher, vignere_encipher,vignere_decipher, polybius_encipher, polybius_decipher, ADFGVX_encipher, ADFGVX_decipher, morse_encipher, morse_decipher, columnar_transposition_encipher, columnar_transposition_decipher, ROT13_encipher, ROT13_decipher, railfence_encipher, railfence_decipher, autokey_encipher, autokey_decipher, hill_encipher, hill_decipher # Import ciphers
+from ciphers import caesar_encipher, caesar_decipher, vignere_encipher,vignere_decipher, polybius_encipher, polybius_decipher, ADFGVX_encipher, ADFGVX_decipher, morse_encipher, morse_decipher, columnar_transposition_encipher, columnar_transposition_decipher, ROT13_encipher, ROT13_decipher, railfence_encipher, railfence_decipher, autokey_encipher, autokey_decipher, hill_encipher, hill_decipher, six_needle_wheatstone_telegraph_decode, six_needle_wheatstone_telegraph_encode  # Import ciphers
 
 # ASCII art
 ascii_art = f"""
@@ -24,7 +24,7 @@ print(f"Type {BOLD}'help'{RESET} to see a list of commands.")
 while True:
     command = input(f"> ").strip().lower()
     
-    ciphers = ["caesar", "vignere", "polybius", "ADFGVX", "morse", "columnar transposition", "ROT13", "railfence (zig-zag)", "autokey", "hill"]
+    ciphers = ["caesar", "vignere", "polybius", "ADFGVX", "morse", "columnar transposition", "ROT13", "railfence (zig-zag)", "autokey", "hill", "Cooke-Wheatford telegraph"]
 
     if command == "help":
         show_help()
@@ -112,6 +112,13 @@ while True:
             size = input("Size (2,3...): ")
             hill_ciphertext = hill_encipher(plaintext, keyword, int(size))
             print(f"{BOLD}{hill_ciphertext}{RESET}")
+        elif command == "11":
+            print("Plaintext: ")
+            plaintext = read_input()
+            print(plaintext)
+            needles = input("How many needles (5): ")
+            cooke_wheatstone_ciphertext = six_needle_wheatstone_telegraph_encode(plaintext, int(needles))
+            print(f"{BOLD}{cooke_wheatstone_ciphertext}{RESET}")
     elif command == "decode":
         for cipher in ciphers:
             print(f"{YELLOW}{ciphers.index(cipher) + 1}. {cipher}{RESET}")
@@ -193,6 +200,13 @@ while True:
             size = input("Size (2,3...): ")
             hill_plaintext = hill_decipher(ciphertext, keyword, int(size))
             print(f"{BOLD}{hill_plaintext}{RESET}")
+        elif command == "11":
+            print("Ciphertext: ")
+            ciphertext = read_input()
+            print(ciphertext)
+            needles = input("How many needles (5): ")
+            cooke_wheatstone_plaintext = six_needle_wheatstone_telegraph_decode(ciphertext, int(needles))
+            print(f"{BOLD}{cooke_wheatstone_plaintext}{RESET}")
     elif command == "bigram":
             print("Paste you text here: ")
             text = read_input()
