@@ -472,7 +472,7 @@ def hill_encipher(plaintext, key, size):
         cipher_matrix = (key @ matrix) % 26
         ciphertext = ''.join(chr(int(num) + ord('A')) for num in cipher_matrix.flatten('F'))
         ciphertext_spaces = ""
-        ciphertext_list = [ciphertext[i:i+5] for i in range(0, len(ciphertext), 5)]
+        ciphertexgit_list = [ciphertext[i:i+5] for i in range(0, len(ciphertext), 5)]
         ciphertext_spaces = ' '.join(ciphertext_list)
         return ciphertext_spaces
     else:
@@ -512,3 +512,80 @@ def hill_decipher(ciphertext, key, size):
     else:
         raise ValueError("Key is invalid: determinant of key matrix is not coprime with 26")
     
+def six_needle_wheatstone_telegraph_encode(plaintext, needule_number):
+    dict = {}
+    wheatstone_telegraph_5needle = {
+        'A': '/|||\\',
+        'B': '/||\\|',
+        'D': '|/||\\',
+        'E': '/|\\||',
+        'F': '|/|\\|',
+        'G': '||/|\\',
+        'H': '/\\|||',
+        'I': '|/\\||',
+        'K': '||/\\|',
+        'L': '|||/\\',
+        'M': '\\/|||',
+        'N': '|\\/||',
+        'O': '||\\/|',
+        'P': '|||\\/',
+        'R': '\\|/||',
+        'S': '|\\|/|',
+        'T': '||\\|/',
+        'U': '\\||/|',
+        'W': '|\\||/',
+        'Y': '\\|||/',
+        ' ': '|||||'
+    }
+    if needule_number == 5:
+        dict = wheatstone_telegraph_5needle
+
+    ciphertext = ""
+    for char in plaintext.upper():
+
+        if char in dict:
+            ciphertext += dict[char] + " "
+        else:
+            ciphertext += char + ' '
+    
+    return ciphertext
+
+
+def six_needle_wheatstone_telegraph_decode(ciphertext, needle_number):
+    dict = {}
+    wheatstone_telegraph_5needle = {
+        'A': '/|||\\',
+        'B': '/||\\|',
+        'D': '|/||\\',
+        'E': '/|\\||',
+        'F': '|/|\\|',
+        'G': '||/|\\',
+        'H': '/\\|||',
+        'I': '|/\\||',
+        'K': '||/\\|',
+        'L': '|||/\\',
+        'M': '\\/|||',
+        'N': '|\\/||',
+        'O': '||\\/|',
+        'P': '|||\\/',
+        'R': '\\|/||',
+        'S': '|\\|/|',
+        'T': '||\\|/',
+        'U': '\\||/|',
+        'W': '|\\||/',
+        'Y': '\\|||/',
+        ' ': '|||||'
+    }
+    if needle_number == 5:
+        dict = wheatstone_telegraph_5needle
+    wheatstone_telegraph_decipher = {morse: char for char, morse in wheatstone_telegraph_5needle.items()}
+    plaintext = ""
+    ciphertext = ciphertext.split(" ")
+    for letter in ciphertext:
+
+        if letter in wheatstone_telegraph_decipher:
+            plaintext += wheatstone_telegraph_decipher[letter]
+        else:
+            plaintext += letter
+    
+    return plaintext
