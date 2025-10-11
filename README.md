@@ -47,6 +47,7 @@ A deciphering, enciphering and cryptanalysis CLI tool.
 - Rail fence (zig-zag)  
 - Autokey/Autoclave  
 - Hill
+- Cooke-Wheatson telegraph
 
 ### Text Analysis  
 - Bigram frequency analysis  
