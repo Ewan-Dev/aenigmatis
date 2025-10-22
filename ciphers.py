@@ -1,3 +1,4 @@
+import math
 from utils import remove_non_alphabetic, mod_inverse, matrix_mod_inverse
 from math import gcd
 import numpy as np
@@ -308,36 +309,81 @@ def columnar_transposition_encipher(plaintext, key):
         ciphertext += columns[n]
     return ciphertext
 
-def columnar_transposition_decipher(ciphertext, key):
-    ciphertext = ciphertext.upper().replace(" ", "")
-    key = key.upper().replace(" ", "")
-    
-    trans_key = ""
-    for char in key:
-        if char not in trans_key:
-            trans_key += char
-    print(trans_key)
-    columns_num = len(trans_key) 
 
-    order = sorted(range(len(trans_key)), key=lambda x: trans_key[x] )
+def columnar_transposition_decipher(ciphertext, key, type):
+    if type == 1:
+        ciphertext = ciphertext.upper().replace(" ", "")
+        key = key.upper().replace(" ", "")
+        
+        trans_key = ""
+        for char in key:
+            if char not in trans_key:
+                trans_key += char
+        print(trans_key)
+        columns_num = len(trans_key) 
+
+        order = sorted(range(len(trans_key)), key=lambda x: trans_key[x] )
+        
+        column_min, column_add = divmod(len(ciphertext), columns_num)
+        column_lengths = [column_min + 1 if i <  column_add else column_min for i in range(columns_num)]
+        columns = [''] * columns_num 
+        
+        pos = 0
+        for col_index in order:
+            length = column_lengths[col_index]
+            columns[col_index] = ciphertext[pos:pos+length]
+            pos += length
+        
+        plaintext = ""
+        for row in range(column_lengths[0]):
+            for col in range(columns_num):
+                if row < len(columns[col]):
+                    plaintext += columns[col][row]
+        
+        return plaintext
     
-    column_min, column_add = divmod(len(ciphertext), columns_num)
-    column_lengths = [column_min + 1 if i <  column_add else column_min for i in range(columns_num)]
-    columns = [''] * columns_num 
-    
-    pos = 0
-    for col_index in order:
-        length = column_lengths[col_index]
-        columns[col_index] = ciphertext[pos:pos+length]
-        pos += length
-    
-    plaintext = ""
-    for row in range(column_lengths[0]):
-        for col in range(columns_num):
-            if row < len(columns[col]):
-                plaintext += columns[col][row]
-    
-    return plaintext
+    if type == 2:
+        ciphertext = ciphertext.upper().replace(" ", "")
+        key = key.upper().replace(" ", "")
+
+        trans_key = ""
+        for char in key:
+            if char not in trans_key:
+                trans_key += char
+        print(trans_key)
+        columns_num = len(trans_key) 
+        rows_num = math.ceil(len(ciphertext) / columns_num)
+        order = sorted(range(len(trans_key)), key=lambda x: trans_key[x] )
+
+        full_cols = len(ciphertext) % columns_num
+        if full_cols == 0:
+            full_cols = columns_num
+
+        grid = [[''] * columns_num for i in range(rows_num)]
+        pos = 0
+        for row in range(rows_num):
+            for col in range(columns_num):
+                if pos < len(ciphertext):
+                    grid[row][col] = ciphertext[pos]
+                    pos += 1
+
+        original_grid = [[''] * columns_num for x in range(rows_num)]
+        pos = 0
+
+        for i in order:
+            col_height = rows_num if (order.index(i) < full_cols) else rows_num - 1
+            for row in range(col_height):
+                if pos < len(ciphertext):
+                    original_grid[row][i] = grid[row][order.index(i)]
+                    pos += 1
+
+        plaintext = ""
+        for row in range(rows_num):
+            for col in range(columns_num):
+                if original_grid[row][col]:
+                    plaintext += original_grid[row][col]
+        
+        return plaintext
 
 def ROT13_encipher(text):
     ciphertext = caesar_encipher(text, 13)
@@ -589,3 +635,61 @@ def six_needle_wheatstone_telegraph_decode(ciphertext, needle_number):
             plaintext += letter
     
     return plaintext
+
+#TODO: Debug solitaire cipher
+# def solitaire_encipher(plaintext, cardstream, splitting_char):
+    plaintext = plaintext.replace(" ", "")
+    cardstream = cardstream.replace("A", "53")
+    cardstream = cardstream.replace("B", "54")
+    cleaned_plaintext = ""
+    for char in plaintext:
+        if char.isalpha():
+            cleaned_plaintext += char
+    whole_keystream = ""
+    i = 0
+    deck = [int(x) for x in cardstream.split(splitting_char)]
+    while i < len(cleaned_plaintext):
+        joker_a_index = deck.index(53)
+        joker_b_index = deck.index(54)
+        if joker_a_index == len(deck) - 1:
+            deck.insert(1, deck.pop(joker_a_index))
+        else:
+            deck.insert(joker_a_index + 1, deck.pop(joker_a_index))
+        
+        if joker_b_index == len(deck) - 1:
+            deck.insert(2, deck.pop(joker_b_index))
+        elif  joker_b_index == len(deck) - 2:
+            deck.insert(1, deck.pop(joker_b_index))
+        else:
+            deck.insert(joker_b_index + 2, deck.pop(joker_b_index))
+
+        first_joker = min(deck.index(53), deck.index(54))
+        second_joker = max(deck.index(53), deck.index(54))
+        deck_first_section = deck[:first_joker]
+        deck_second_section = deck[first_joker:second_joker + 1]
+        deck_third_section = deck[second_joker + 1:]
+        print(str(deck_third_section) + "2nd," + str(deck_second_section) + "3rd," + str(deck_first_section))
+        deck = deck_third_section + deck_second_section + deck_first_section
+        bottom_card_value = ""
+        if deck[-1] == 54:
+            bottom_card_value = 53
+        else:
+            bottom_card_value = int(deck[-1])
+        top_cut = deck[:bottom_card_value]
+        del deck[:bottom_card_value]
+        for card in top_cut:
+            deck.insert(-2, card)
+        
+        top_card = int(deck[0])
+        print(top_card)
+        keystream = deck[top_card]
+        if keystream != 53 and keystream != 54:
+            whole_keystream += str((keystream % 26) - 1) + ' '
+            i += 1 
+    ciphertext = ""
+    print(whole_keystream)
+    for char, keystream in zip(cleaned_plaintext, whole_keystream.split(' ')):
+        #  print(ord(char.upper()) - ord('A') + 1)
+        ciphertext += chr((((ord(char.upper()) - ord('A') )+ int(keystream))) + ord('A') )
+    return ciphertext
+#print(solitaire_encipher("DO NOT USE PC", """5, 12, 7, 3, 49, 23, 2, 18, 34, 8, 21, 1, 42, 5, 11, 53, 27, 36, 50, 6, 30, 9, 14, 45, 17, 26, 19, 13, 38, 4, 24, 29, 10, 35, 31, 46, 16, 39, 25, 41, 32, 54, 20, 22, 44, 15, 48, 28, 33, 40, 47, 37, 51, 52, 43""", ", "))

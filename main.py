@@ -80,6 +80,7 @@ while True:
             print("Plaintext: ")
             plaintext = read_input()
             print(plaintext)
+            print(f"{RED}Currently only write by rows, read by columns is available{RESET}")
             key = input("Key: ")
             col_trans_ciphertext = columnar_transposition_encipher(plaintext, key)
             print(f"{BOLD}{col_trans_ciphertext}{RESET}")
@@ -169,7 +170,8 @@ while True:
             ciphertext = read_input()
             print(ciphertext)
             key = input("Key: ")
-            col_trans_plaintext = columnar_transposition_decipher(ciphertext, key)
+            type = input("Type (write by rows, read by columns = 1, write by rows, read by rows = 2): ")
+            col_trans_plaintext = columnar_transposition_decipher(ciphertext, key, int(type))
             print(f"{BOLD}{col_trans_plaintext}{RESET}")
         elif command == "7":
             print("Ciphertext: ")
