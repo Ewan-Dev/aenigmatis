@@ -247,6 +247,13 @@ while True:
             print(text)
             non_alpha_result = remove_non_alphabetic(text)
             print(f"Non-alphabetic string: {non_alpha_result}")
+    elif command == "ct_bruteforce":
+        print("Paste you ciphertext here: ")
+        text = read_input()
+        key_len = input("Key length: ")
+        word = input("A word to filter for through plaintext (optional): ")
+        print(text)
+        brute_force_transpositional_cipher(key_len, text, word)
     elif command == "exit":
             exit()
     else:
