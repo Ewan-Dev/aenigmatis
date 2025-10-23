@@ -57,3 +57,4 @@ A deciphering, enciphering and cryptanalysis CLI tool.
 
 ### Cryptanalysis  
 - Kasiski's method  
+- Bruteforce columnar transposition ciphertext to plaintext solution
