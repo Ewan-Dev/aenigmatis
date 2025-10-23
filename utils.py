@@ -1,4 +1,6 @@
 import numpy as np
+import math
+
 
 BOLD = '\033[1m'
 RESET = '\033[0m'
@@ -8,6 +10,82 @@ RED = '\033[31m'
 BLUE = '\033[34m'
 CYAN = '\033[36m'
 PURPLE = '\033[35m'
+
+#TEMP FIX TO AVOID CIRCULAR IMPORT ERROR :/
+def columnar_transposition_decipher(ciphertext, key, type):
+    if type == 1:
+        ciphertext = ciphertext.upper().replace(" ", "")
+        key = key.upper().replace(" ", "")
+        
+        trans_key = ""
+        for char in key:
+            if char not in trans_key:
+                trans_key += char
+        print(trans_key)
+        columns_num = len(trans_key) 
+
+        order = sorted(range(len(trans_key)), key=lambda x: trans_key[x] )
+        
+        column_min, column_add = divmod(len(ciphertext), columns_num)
+        column_lengths = [column_min + 1 if i <  column_add else column_min for i in range(columns_num)]
+        columns = [''] * columns_num 
+        
+        pos = 0
+        for col_index in order:
+            length = column_lengths[col_index]
+            columns[col_index] = ciphertext[pos:pos+length]
+            pos += length
+        
+        plaintext = ""
+        for row in range(column_lengths[0]):
+            for col in range(columns_num):
+                if row < len(columns[col]):
+                    plaintext += columns[col][row]
+        
+        return plaintext
+    
+    if type == 2:
+        ciphertext = ciphertext.upper().replace(" ", "")
+        key = key.upper().replace(" ", "")
+        trans_key = ""
+        for char in key:
+            if char not in trans_key:
+                trans_key += char
+        print(trans_key)
+        columns_num = len(trans_key) 
+        rows_num = math.ceil(len(ciphertext) / columns_num)
+        order = sorted(range(len(trans_key)), key=lambda x: trans_key[x] )
+
+        full_cols = len(ciphertext) % columns_num
+        if full_cols == 0:
+            full_cols = columns_num
+
+        grid = [[''] * columns_num for i in range(rows_num)]
+        pos = 0
+        for row in range(rows_num):
+            for col in range(columns_num):
+                if pos < len(ciphertext):
+                    grid[row][col] = ciphertext[pos]
+                    pos += 1
+
+        original_grid = [[''] * columns_num for x in range(rows_num)]
+        pos = 0
+
+        for i in order:
+            col_height = rows_num if (order.index(i) < full_cols) else rows_num - 1
+            for row in range(col_height):
+                if pos < len(ciphertext):
+                    original_grid[row][i] = grid[row][order.index(i)]
+                    pos += 1
+
+        plaintext = ""
+        for row in range(rows_num):
+            for col in range(columns_num):
+                if original_grid[row][col]:
+                    plaintext += original_grid[row][col]
+        
+        return plaintext
+
 
 def show_help():
     print(f"{BOLD}Available Commands:{RESET}")
@@ -650,3 +728,42 @@ def matrix_mod_inverse(matrix, modulo):
     cofactor_matrix = np.linalg.inv(matrix).T * np.linalg.det(matrix)
     matrix_adjugate = np.round(cofactor_matrix).astype(int) % modulo
     return (determinant_inverse * matrix_adjugate) % modulo
+
+def brute_force_transpositional_cipher(max_key, ciphertext):
+    permutations = []
+    num_list = [n for n in range(max_key)]
+    print(num_list)
+    find_number_permuatations(num_list, permutations, current=[])
+    letter_permutations = []
+    plaintext_score = []
+    for perm in permutations:
+        letter_perm = []
+        for n in perm:
+            letter_perm.append(chr(n + 65))
+        letter_permutations.append(letter_perm)
+
+    for let_perm in letter_permutations:
+        let_perm = "".join(let_perm)
+        plaintext = columnar_transposition_decipher(ciphertext, let_perm, 1)
+        if "DEAR" in plaintext:
+            english_score = overall_english_score(plaintext)
+            plaintext_score.append((plaintext, english_score, let_perm))
+        plaintext = columnar_transposition_decipher(ciphertext, let_perm, 2)
+        if "DEAR" in plaintext:
+            english_score = overall_english_score(plaintext)
+            plaintext_score.append((plaintext, english_score, let_perm))
+    print("Saved in plaintext_list.txt. Plaintext, likelihood of being English, permutation")
+
+    plaintext_score = sorted(plaintext_score, key=lambda x: x[1], reverse=True)
+    f = open("plaintext_list.txt", "w")
+    f.write(str(plaintext_score))
+    f.close()
+    return plaintext_score
+
+def find_number_permuatations(numbers_list, all_permutations, current):
+    if len(current) == len(numbers_list):
+        all_permutations.append(current)
+    else:
+        for num in numbers_list:
+            if num not in current:
+                find_number_permuatations(numbers_list, all_permutations, current + [num])

@@ -345,7 +345,6 @@ def columnar_transposition_decipher(ciphertext, key, type):
     if type == 2:
         ciphertext = ciphertext.upper().replace(" ", "")
         key = key.upper().replace(" ", "")
-
         trans_key = ""
         for char in key:
             if char not in trans_key:
@@ -637,7 +636,7 @@ def six_needle_wheatstone_telegraph_decode(ciphertext, needle_number):
     return plaintext
 
 #TODO: Debug solitaire cipher
-# def solitaire_encipher(plaintext, cardstream, splitting_char):
+def solitaire_encipher(plaintext, cardstream, splitting_char):
     plaintext = plaintext.replace(" ", "")
     cardstream = cardstream.replace("A", "53")
     cardstream = cardstream.replace("B", "54")
