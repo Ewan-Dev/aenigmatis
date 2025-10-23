@@ -729,7 +729,7 @@ def matrix_mod_inverse(matrix, modulo):
     matrix_adjugate = np.round(cofactor_matrix).astype(int) % modulo
     return (determinant_inverse * matrix_adjugate) % modulo
 
-def brute_force_transpositional_cipher(max_key, ciphertext):
+def brute_force_transpositional_cipher(max_key, ciphertext, word):
     permutations = []
     num_list = [n for n in range(max_key)]
     print(num_list)
@@ -745,11 +745,18 @@ def brute_force_transpositional_cipher(max_key, ciphertext):
     for let_perm in letter_permutations:
         let_perm = "".join(let_perm)
         plaintext = columnar_transposition_decipher(ciphertext, let_perm, 1)
-        if "DEAR" in plaintext:
+        if word:
+            if word in plaintext:
+                english_score = overall_english_score(plaintext)
+                plaintext_score.append((plaintext, english_score, let_perm))
+            plaintext = columnar_transposition_decipher(ciphertext, let_perm, 2)
+            if word in plaintext:
+                english_score = overall_english_score(plaintext)
+                plaintext_score.append((plaintext, english_score, let_perm))
+        else:
             english_score = overall_english_score(plaintext)
             plaintext_score.append((plaintext, english_score, let_perm))
-        plaintext = columnar_transposition_decipher(ciphertext, let_perm, 2)
-        if "DEAR" in plaintext:
+            plaintext = columnar_transposition_decipher(ciphertext, let_perm, 2)
             english_score = overall_english_score(plaintext)
             plaintext_score.append((plaintext, english_score, let_perm))
     print("Saved in plaintext_list.txt. Plaintext, likelihood of being English, permutation")
