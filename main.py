@@ -1,5 +1,6 @@
 from utils import show_help, bigram_finder, trigram_finder, overall_english_score, read_input, kasiskis_method, remove_non_alphabetic, brute_force_transpositional_cipher,  BOLD, RESET, ITALIC, YELLOW, RED, BLUE, CYAN, PURPLE # ANSI codes and help CLI function
 from ciphers import caesar_encipher, caesar_decipher, vignere_encipher,vignere_decipher, polybius_encipher, polybius_decipher, ADFGVX_encipher, ADFGVX_decipher, morse_encipher, morse_decipher, columnar_transposition_encipher, columnar_transposition_decipher, ROT13_encipher, ROT13_decipher, railfence_encipher, railfence_decipher, autokey_encipher, autokey_decipher, hill_encipher, hill_decipher, six_needle_wheatstone_telegraph_decode, six_needle_wheatstone_telegraph_encode  # Import ciphers
+import os
 
 # ASCII art
 ascii_art = f"""
@@ -238,9 +239,12 @@ while True:
             text = read_input()
             print(text)
             kasiski_result = kasiskis_method(text, 3)
-            print(f"Kasiski results: \n")
-            print(f"{BLUE}{ITALIC}Frequency{RESET}    {PURPLE}{BOLD}Length{RESET}")
-            print('\n'.join(f"{BLUE}{ITALIC}{freq}{RESET}    {PURPLE}{BOLD}{length}{RESET}" for length, freq in kasiski_result))
+            if os.path.exists("kasiski_list.txt"):
+                os.remove("kasiski_list.txt")
+                print("File deleted successfully.")
+            f = open("kasiski_list.txt", "w")
+            f.write('\n'.join(f"{freq} {length}" for length, freq in kasiski_result))
+            f.close()
     elif command == "non_alpha":
             print("Paste you text here: ")
             text = read_input()
@@ -253,7 +257,7 @@ while True:
         key_len = input("Key length: ")
         word = input("A word to filter for through plaintext (optional): ")
         print(text)
-        brute_force_transpositional_cipher(key_len, text, word)
+        brute_force_transpositional_cipher(int(key_len), text, word)
     elif command == "exit":
             exit()
     else:
