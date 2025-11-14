@@ -99,6 +99,7 @@ def show_help():
     print(f"{YELLOW}non_alpha{RESET}         - Removes non-alphabetic characters from a string, including spaces")
     print(f"{YELLOW}overall_eng_score{RESET} - Combines trigram and bigram with dynamic weighting for overalal score")
     print(f"{YELLOW}ct_bruteforce{RESET}     - Bruteforces all columnar transpositions")
+    print(f"{YELLOW}vig_bruteforce{RESET}    - Bruteforces all Vignère keys (top 10k most frequently used English words)")
     print(f"{YELLOW}exit{RESET}              - Exit the program\n")
 
 def bigram_finder(string):
