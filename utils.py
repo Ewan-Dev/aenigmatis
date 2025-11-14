@@ -1,5 +1,5 @@
 import numpy as np
-import math
+import math, os
 
 
 BOLD = '\033[1m'

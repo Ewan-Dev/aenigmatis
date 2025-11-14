@@ -2,6 +2,7 @@ import math
 from utils import remove_non_alphabetic, mod_inverse, matrix_mod_inverse
 from math import gcd
 import numpy as np
+import os
 
 def caesar_encipher(text, shift):
     result = ""
